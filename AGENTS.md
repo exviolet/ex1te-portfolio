@@ -4,6 +4,10 @@
 
 Employer-facing frontend portfolio. It is separate from `ex1te.pages.dev` and must not become another personal archive.
 
+## Session state
+
+`HANDOFF.md` carries what this contract deliberately does not: what was finished in the last session, what is open, and what was decided against and why. Read it before starting work, and update it at the end of a session. It is committed, so it travels with the repo.
+
 ## Stack boundaries
 
 - Astro + TypeScript + custom CSS.
@@ -33,7 +37,7 @@ Do not reassemble every section into one long homepage.
 - **Dark by default**, light via an explicit theme toggle. Near-black field, quiet lines, one accent colour.
 - **Rounded geometry.** `--radius-surface` on panels and media, `--radius-pill` on buttons, tags, and navigation.
 - **Monospace for utility only** — navigation, metadata, labels. Body copy stays in the body face.
-- **Projects are an index: rail + panel.** Zero-JS radio switching. This was once framed as the site's "one playful mechanism" borrowed from herdr/niri/tmux; the author rejected that framing on 2026-08-24 because a visitor reads it as a tab interface and the metaphor is never communicated. The site currently has NO playful mechanism — do not claim otherwise, and do not add one without deciding it deliberately.
+- **Projects are an index: rail + panel.** Zero-JS radio switching. This was once framed as the site's "one playful mechanism" borrowed from herdr/niri/tmux; the author rejected that framing on 2026-08-26 because a visitor reads it as a tab interface and the metaphor is never communicated. The site currently has NO playful mechanism — do not claim otherwise, and do not add one without deciding it deliberately.
 - **Indexed document.** Every homepage section carries a `[ SECTION // NN ]` marker and a plain uppercase name. `//` is the separator of the house dialect.
 - **Icons: Iconoir only, semantically matched.** The icon's direction and behaviour must match the action — a download arrow points down into a tray, a navigation arrow points the way the user is going. No Lucide. Never decorative.
 - **Ordinary sections are allowed to be ordinary.** Работы, Опыт, Стек, Контакт need no invented framing.

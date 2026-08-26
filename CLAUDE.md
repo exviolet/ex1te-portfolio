@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `AGENTS.md` — обязательный к соблюдению контракт (stack/route/visual/content boundaries). Читай его перед любым структурным изменением; при конфликте с этим файлом приоритет у `AGENTS.md`.
 
+`HANDOFF.md` — состояние работы между сессиями: что закрыто, что открыто, что решено не делать. Читай перед началом работы, обновляй в конце. Он в репозитории, потому что по проекту ходят и другие агенты, у которых нет памяти Claude Code.
+
 Ключевые запреты, закреплённые тестами (`tests/site.test.mjs`): нет `react`/`react-dom` в зависимостях; в HTML не должно появляться визуального языка Personal Platform (`Steppe Signal`, `Editorial Field Station`, `Personal field station`). GSAP — осознанная зависимость под одну подпись (см. `AGENTS.md`). CSS-фреймворка нет, хотя `TailwindCSS` числится в стеке автора на `/` и `/about` — это заявленный навык, а не зависимость.
 
 ## Команды
