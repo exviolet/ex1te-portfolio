@@ -115,11 +115,11 @@ test('the site is dark by default and offers a theme toggle', async () => {
   assert.match(css, /\[data-theme=["']?light["']?\]/, 'light theme override');
 });
 
-test('projects are presented as workspaces without client-side JavaScript', async () => {
+test('projects are presented as a rail and panel without client-side JavaScript', async () => {
   const html = await built('/');
-  assert.match(html, /name="workspace"/);
+  assert.match(html, /name="project"/);
   // Four radio inputs, one per project, and no framework hydration.
-  assert.equal(html.match(/name="workspace"/g).length, 4);
+  assert.equal(html.match(/name="project"/g).length, 4);
   assert.doesNotMatch(html, /astro-island/);
   // One panel is pre-selected server-side, so the section works with JS disabled.
   assert.match(html, /type="radio"[^>]*checked/);
@@ -136,7 +136,7 @@ test('metadata never uses centred dot separators', async () => {
 
 test('homepage sections are indexed and named', async () => {
   const html = await built('/');
-  for (const [index, name] of [['00', 'Identity'], ['01', 'Workspaces'], ['02', 'Experience'], ['03', 'Stack']]) {
+  for (const [index, name] of [['00', 'Identity'], ['01', 'Projects'], ['02', 'Experience'], ['03', 'Stack']]) {
     assert.match(html, new RegExp(`SECTION\\s*<span[^>]*>//</span>\\s*${index}`), `marker ${index}`);
     assert.match(html, new RegExp(name), `section name ${name}`);
   }

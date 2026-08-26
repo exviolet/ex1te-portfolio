@@ -50,7 +50,7 @@
   --space-3xl: 5rem;
 
   /* Motion. Extracted from what already shipped, not invented: the signature
-     curve is the one the section reveals and the workspace handover already
+     curve is the one the section reveals and the project handover already
      use (GSAP power2.out), and exits run at roughly 0.6x the entrance, as the
      footer watermark already does. Personality is Premium — decelerating
      curves, no overshoot anywhere. */

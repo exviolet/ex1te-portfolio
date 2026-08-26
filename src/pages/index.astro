@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Portrait from '../components/Portrait.astro';
 import SplitName from '../components/SplitName.astro';
-import WorkspaceRail from '../components/WorkspaceRail.astro';
+import ProjectRail from '../components/ProjectRail.astro';
 import SectionHead from '../components/SectionHead.astro';
 import StackGrid from '../components/StackGrid.astro';
 import Icon from '../components/Icon.astro';
@@ -49,13 +49,13 @@ const stamp = (period: string) => {
       </div>
     </section>
 
-    <section class="workspaces-section shell" aria-labelledby="workspaces-title">
-      <SectionHead index="01" name="Workspaces" id="workspaces-title" />
+    <section class="projects-section shell" aria-labelledby="projects-title">
+      <SectionHead index="01" name="Projects" id="projects-title" />
       <p class="section-lead">
-        Четыре рабочих пространства: коммерческий frontend, offline-продукт для реального оборудования,
+        Четыре проекта: коммерческий frontend, offline-продукт для реального оборудования,
         Linux desktop tool и мобильное приложение.
       </p>
-      <WorkspaceRail entries={work} />
+      <ProjectRail entries={work} />
     </section>
 
     <section class="experience-section shell" data-reveal aria-labelledby="experience-title">

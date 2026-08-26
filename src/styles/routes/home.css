@@ -1,5 +1,5 @@
 /* Indexed-document homepage. Section rhythm is deliberately uneven:
-   identity is the widest and loudest, workspaces is the working surface,
+   identity is the widest and loudest, projects is the working surface,
    experience is a dense list, stack is a reference table, contact is one line. */
 
 .route-home main > section { padding-bottom: var(--space-3xl); }

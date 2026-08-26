@@ -8,7 +8,7 @@ Employer-facing frontend portfolio. It is separate from `ex1te.pages.dev` and mu
 
 - Astro + TypeScript + custom CSS.
 - Tailwind is permitted but not adopted; the stylesheet is token-driven and small. Adopt it only if the author asks.
-- GSAP drives four places and no more: the name assembling letter by letter, the single section reveal (`[data-reveal]`), the footer watermark, and the workspace handover. Workspace *switching* itself is CSS-only — radio inputs plus `:checked` — and GSAP animates only the handover between panels. All of it is gated on `html[data-motion="ready"]`, so the page reads fully without JavaScript. Do not add a fifth site, and do not widen the reveal: 14px, once, no scrub is the cap.
+- GSAP drives four places and no more: the name assembling letter by letter, the single section reveal (`[data-reveal]`), the footer watermark, and the project-panel handover. Switching itself is CSS-only — radio inputs plus `:checked` — and GSAP animates only the handover between panels. All of it is gated on `html[data-motion="ready"]`, so the page reads fully without JavaScript. Do not add a fifth site, and do not widen the reveal: 14px, once, no scrub is the cap.
 - State feedback — hover, press, theme swap, active markers — is CSS only, never GSAP. Timings come from the `--dur-*` and `--ease-*` tokens; do not hand-pick new durations.
 - Do not turn the site into a React SPA.
 - Client JavaScript must stay isolated to components that require it, and every interaction must work without it.
@@ -33,7 +33,7 @@ Do not reassemble every section into one long homepage.
 - **Dark by default**, light via an explicit theme toggle. Near-black field, quiet lines, one accent colour.
 - **Rounded geometry.** `--radius-surface` on panels and media, `--radius-pill` on buttons, tags, and navigation.
 - **Monospace for utility only** — navigation, metadata, labels. Body copy stays in the body face.
-- **One playful mechanism: Workspaces.** Projects are presented as workspaces (rail + panel), drawn from the author's real environment — herdr, niri, tmux. Do not add a second competing mechanism.
+- **Projects are an index: rail + panel.** Zero-JS radio switching. This was once framed as the site's "one playful mechanism" borrowed from herdr/niri/tmux; the author rejected that framing on 2026-08-24 because a visitor reads it as a tab interface and the metaphor is never communicated. The site currently has NO playful mechanism — do not claim otherwise, and do not add one without deciding it deliberately.
 - **Indexed document.** Every homepage section carries a `[ SECTION // NN ]` marker and a plain uppercase name. `//` is the separator of the house dialect.
 - **Icons: Iconoir only, semantically matched.** The icon's direction and behaviour must match the action — a download arrow points down into a tray, a navigation arrow points the way the user is going. No Lucide. Never decorative.
 - **Ordinary sections are allowed to be ordinary.** Работы, Опыт, Стек, Контакт need no invented framing.
