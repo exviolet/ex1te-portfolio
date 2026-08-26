@@ -1,0 +1,28 @@
+---
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+/* Inlines an Iconoir SVG at build time. Iconoir strokes with `currentColor`,
+   so an icon takes the colour of whatever it sits in.
+   Icons are semantic here: the glyph's direction must match the action. */
+interface Props { name: string; size?: number; }
+const { name, size = 16 } = Astro.props;
+
+const file = path.join(process.cwd(), 'node_modules/iconoir/icons/regular', `${name}.svg`);
+let svg: string;
+try {
+  svg = readFileSync(file, 'utf8');
+} catch {
+  throw new Error(`Icon "${name}" not found in iconoir/icons/regular. Check the name against node_modules/iconoir/icons/regular.`);
+}
+
+svg = svg
+  .replace(/\s(?:width|height)="[^"]*"/g, '')
+  .replace('<svg', `<svg class="icon" data-icon="${name}" width="${size}" height="${size}" aria-hidden="true" focusable="false"`);
+---
+
+<Fragment set:html={svg} />
+
+<style is:global>
+  .icon { flex: 0 0 auto; display: block; }
+</style>

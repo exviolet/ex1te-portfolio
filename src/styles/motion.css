@@ -1,0 +1,44 @@
+/* Colour changes are the one thing every link and button does, so they carry a
+   global rule; anything animating another property declares it locally. */
+a, button {
+  transition:
+    color var(--dur-quick) var(--ease-signature),
+    background-color var(--dur-quick) var(--ease-signature),
+    border-color var(--dur-quick) var(--ease-signature);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Press feedback. Premium means a plain depression and return with no
+     overshoot; the release is slower than the press, because the settle is the
+     part that reads as a response. */
+  .pill, .icon-action, .theme-toggle { transition-property: color, background-color, border-color, transform; }
+  .pill, .icon-action, .theme-toggle { transition-duration: var(--dur-quick), var(--dur-quick), var(--dur-quick), 200ms; }
+  .pill:active, .icon-action:active, .theme-toggle:active { transform: scale(0.98); transition-duration: 120ms; }
+
+  /* Icons move the way they point. The contract already requires a glyph's
+     direction to match its action; this only finishes that sentence. A brand
+     mark like the GitHub octocat points nowhere and so stays put. */
+  .icon { transition: transform var(--dur-quick) var(--ease-signature); }
+  a:hover .icon[data-icon='arrow-right'] { transform: translateX(3px); }
+  a:hover .icon[data-icon='arrow-up-right'] { transform: translate(2px, -2px); }
+  a:hover .icon[data-icon='download'] { transform: translateY(2px); }
+
+  /* Theme handover. The attribute is set by the toggle only for the length of
+     the swap, so nothing carries a universal transition at rest — that is what
+     makes a whole-page colour transition affordable. */
+  html[data-theme-anim] *,
+  html[data-theme-anim] *::before,
+  html[data-theme-anim] *::after {
+    transition:
+      background-color var(--dur-theme) var(--ease-signature),
+      border-color var(--dur-theme) var(--ease-signature),
+      color var(--dur-theme) var(--ease-signature),
+      fill var(--dur-theme) var(--ease-signature),
+      stroke var(--dur-theme) var(--ease-signature) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+}

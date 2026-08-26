@@ -1,0 +1,72 @@
+---
+import Icon from './Icon.astro';
+/* Both glyphs are rendered; CSS shows the one matching the active theme, so the
+   icon is correct even before the script runs. Each shows the theme you'd switch TO. */
+---
+
+<button class="theme-toggle" type="button" data-theme-toggle aria-label="Переключить тему">
+  <span class="glyph to-light"><Icon name="sun-light" size={17} /></span>
+  <span class="glyph to-dark"><Icon name="half-moon" size={17} /></span>
+</button>
+
+<style>
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-pill);
+    color: var(--color-muted);
+    background: transparent;
+    cursor: pointer;
+  }
+  .theme-toggle:hover { color: var(--color-ink); background: var(--color-raised); }
+  /* Both glyphs stay in the layout and cross-fade, so the swap is a rotation
+     between two states rather than one glyph vanishing and another appearing.
+     The inactive one is inert: it is aria-hidden and inside the button anyway. */
+  .glyph {
+    grid-area: 1 / 1;
+    display: grid;
+    transition:
+      opacity var(--dur-quick) var(--ease-signature),
+      transform var(--dur-quick) var(--ease-signature);
+  }
+  .to-light { opacity: 0; transform: rotate(-40deg) scale(0.7); }
+  :global(:root[data-theme='light']) .to-light { opacity: 1; transform: none; }
+  :global(:root[data-theme='light']) .to-dark { opacity: 0; transform: rotate(40deg) scale(0.7); }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+
+  function apply(theme: 'dark' | 'light') {
+    document.documentElement.dataset.theme = theme;
+    const next = theme === 'light' ? 'тёмную' : 'светлую';
+    toggle?.setAttribute('aria-label', `Переключить на ${next} тему`);
+  }
+
+  apply(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+
+  let settle: number | undefined;
+
+  toggle?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+
+    /* Flag the swap so motion.css applies its colour transition only while the
+       palette is actually changing. A universal transition left on at rest
+       would tax every hover on the page for the sake of one click. */
+    root.dataset.themeAnim = '';
+    window.clearTimeout(settle);
+    settle = window.setTimeout(() => delete root.dataset.themeAnim, 320);
+
+    apply(next);
+    try {
+      localStorage.setItem('ex1te-theme', next);
+    } catch {
+      /* private mode or blocked storage: the choice just does not persist */
+    }
+  });
+</script>

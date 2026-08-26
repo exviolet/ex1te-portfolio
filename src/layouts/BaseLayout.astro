@@ -1,0 +1,51 @@
+---
+import SeoHead from '../components/SeoHead.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import PageMotion from '../components/PageMotion.astro';
+import '../styles/tokens.css';
+import '../styles/reset.css';
+import '../styles/base.css';
+import '../styles/layout.css';
+import '../styles/typography.css';
+import '../styles/motion.css';
+interface Props { title: string; description: string; routeClass?: string; }
+const { title, description, routeClass = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ru" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0e0e10" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fbfbfa" media="(prefers-color-scheme: light)" />
+    {/* Runs before first paint so a stored light theme never flashes dark. */}
+    <script is:inline>
+      try {
+        const stored = localStorage.getItem('ex1te-theme');
+        if (stored === 'light' || stored === 'dark') document.documentElement.dataset.theme = stored;
+      } catch {}
+      // Marks that motion will run, so the reveal styles never hide content
+      // when scripts are off or the visitor asked for reduced motion.
+      try {
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.documentElement.dataset.motion = 'ready';
+        }
+      } catch {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
+    <SeoHead title={title} description={description} />
+  </head>
+  <body class={routeClass}>
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+    <PageMotion />
+  </body>
+</html>

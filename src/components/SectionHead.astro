@@ -1,0 +1,46 @@
+---
+/* Name and index sit on one line, split by a rule — they are one label, not two
+   stacked ones. `//` is the house separator; never a centred dot. */
+interface Props { index: string; name: string; id?: string; as?: 'h2' | 'p'; }
+/* Identity passes as="p": its real heading is the h1 with the person's name, and
+   an h2 rendered above it put "Identity" ahead of the name in heading order. */
+const { index, name, id, as: Label = 'h2' } = Astro.props;
+---
+
+<div class="section-head">
+  <Label id={id} class="section-name">{name}</Label>
+  <span class="section-rule" aria-hidden="true"></span>
+  <p class="section-marker">[ SECTION <span>//</span> {index} ]</p>
+</div>
+
+<style>
+  .section-head {
+    display: grid;
+    grid-template-columns: auto minmax(1.5rem, 1fr) auto;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .section-head .section-name {
+    font-family: var(--font-utility);
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .section-rule { height: 1px; background: var(--color-line); }
+  .section-marker {
+    color: var(--color-muted);
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+  .section-marker span { color: var(--color-accent); }
+
+  @media (max-width: 620px) {
+    .section-head { gap: 0.85rem; }
+    .section-head .section-name { font-size: 0.85rem; letter-spacing: 0.12em; }
+    .section-marker { font-size: 0.66rem; }
+  }
+</style>

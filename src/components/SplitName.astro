@@ -1,0 +1,29 @@
+---
+/* The name is split into per-letter spans at build time rather than by GSAP's
+   SplitText, so the markup is complete before any script runs and stays
+   readable with JavaScript off. The spans are hidden from assistive tech and
+   the whole name is exposed once through aria-label. */
+interface Props { first: string; last: string; label: string; }
+const { first, last, label } = Astro.props;
+
+const letters = (word: string) => [...word];
+---
+
+<h1 class="split-name" aria-label={label}>
+  <span class="split-line" aria-hidden="true">
+    {letters(first).map((char) => <span class="split-char">{char}</span>)}
+  </span>
+  <span class="split-line accent" aria-hidden="true">
+    {letters(last).map((char) => <span class="split-char">{char}</span>)}
+  </span>
+</h1>
+
+<style>
+  .split-name { display: grid; }
+  .split-line { display: block; }
+  .split-char { display: inline-block; will-change: transform; }
+
+  /* Only hidden when motion is actually going to run — see BaseLayout's inline
+     script. Without JS, or with reduced motion, the name renders normally. */
+  :global(html[data-motion='ready']) .split-char { opacity: 0; }
+</style>

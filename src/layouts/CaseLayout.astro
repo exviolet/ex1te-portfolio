@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import ProjectMedia from '../components/ProjectMedia.astro';
+import '../styles/routes/case.css';
+import type { WorkMedia } from '../data/workMedia';
+interface Props { entry: CollectionEntry<'work'>; media: WorkMedia; }
+const { entry, media } = Astro.props;
+const statusLabels = {
+  production: 'Production',
+  'pre-launch': 'Pre-launch',
+  released: 'Released',
+  building: 'In development',
+} as const;
+---
+
+<BaseLayout title={`${entry.data.title} / Бакытжан Избасаров`} description={entry.data.summary} routeClass="route-case">
+  <main>
+    <header class="case-opening shell">
+      <a class="case-back" href="/work">Вернуться к работам</a>
+      <p class="utility">{entry.data.context}</p>
+      <h1>{entry.data.title}</h1>
+      <p class="case-summary">{entry.data.summary}</p>
+      <div class="case-facts">
+        <div><small>Роль</small><b>{entry.data.role}</b></div>
+        <div><small>Команда</small><b>{entry.data.team}</b></div>
+        <div><small>Период</small><b>{entry.data.period}</b></div>
+        <div><small>Статус</small><b>{statusLabels[entry.data.status]}</b></div>
+      </div>
+      <ProjectMedia media={media} eager={true} />
+      <slot name="caption" />
+    </header>
+    <section class="case-content shell">
+      <article class="prose"><slot /></article>
+      <aside class="case-aside">
+        <div>
+          <small>Технологии</small>
+          <ul>{entry.data.technologies.map((technology) => <li>{technology}</li>)}</ul>
+        </div>
+        {media.document && <a href={media.document}>Открыть отчёт</a>}
+        {media.video && <a href={media.video}>Открыть видео</a>}
+      </aside>
+    </section>
+    <section class="case-next route-section">
+      <div class="shell two-column"><h2>Следующий шаг</h2><div><p>Посмотреть другие проекты или связаться.</p><p><a href="/work">Все работы</a> / <a href="/contact">Контакты</a></p></div></div>
+    </section>
+  </main>
+</BaseLayout>

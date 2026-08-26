@@ -1,0 +1,38 @@
+body {
+  min-width: 320px;
+  color: var(--color-ink);
+  background: var(--color-bg);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-underline-offset: 0.25em; }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; border-radius: 2px; }
+::selection { color: var(--color-accent-ink); background: var(--color-accent); }
+main { min-height: calc(100vh - 140px); }
+
+/* Pill actions, shared by header, hero, and contact. */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 42px;
+  padding-inline: 1.05rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-pill);
+  color: var(--color-ink);
+  background: transparent;
+  font-family: var(--font-utility);
+  font-size: 0.8rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+.pill:hover { border-color: var(--color-ink); background: var(--color-raised); }
+.pill-accent {
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+  background: var(--color-accent);
+}
+.pill-accent:hover { border-color: var(--color-accent-hover); background: var(--color-accent-hover); }

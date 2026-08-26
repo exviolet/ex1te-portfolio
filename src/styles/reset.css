@@ -1,0 +1,6 @@
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body, h1, h2, h3, p, figure, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; }
+img, picture, video { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; }

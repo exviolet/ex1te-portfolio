@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
+import CaseLayout from '../../layouts/CaseLayout.astro';
+import CaseCaption from '../../components/CaseCaption.astro';
+import { workMedia } from '../../data/workMedia';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work', ({ data }) => data.published);
+  return entries.map((entry) => ({ params: { slug: entry.id.replace(/\.md$/, '') }, props: { entry } }));
+}
+
+interface Props { entry: CollectionEntry<'work'>; }
+const { entry } = Astro.props;
+const slug = entry.id.replace(/\.md$/, '');
+const media = workMedia[slug];
+const { Content } = await render(entry);
+const captions: Record<string, string> = {
+  'steam-kz': 'Пользовательская главная STEAM.KZ. Показаны синтетические тестовые данные на staging-копии.',
+  interactivelab: 'Финальное media с реальной METZ-панели будет добавлено после следующего hardware-run.',
+  sendoff: 'Фактический handoff: prompt готовится в Sendoff и отправляется в выбранный terminal target.',
+};
+---
+
+<CaseLayout entry={entry} media={media}>
+  <CaseCaption slot="caption" text={captions[slug]} />
+  <Content />
+</CaseLayout>

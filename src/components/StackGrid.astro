@@ -1,0 +1,76 @@
+---
+import { stackItems } from '../data/skills';
+---
+
+<div class="stack-table">
+  {stackItems.map((item) => (
+    <div class="stack-cell">
+      <p class="stack-kind"><span aria-hidden="true">//</span> {item.kind}</p>
+      <p class="stack-name">{item.name}</p>
+    </div>
+  ))}
+</div>
+
+<style>
+  /* One surface with hairline dividers, not eighteen boxed cards: the reference
+     grids read as a single table, and the board bans a 1px box around every
+     block. The 1px gap over a line-coloured background draws those dividers at
+     any column count, so no nth-child arithmetic per breakpoint. */
+  .stack-table {
+    display: grid;
+    margin-top: 1.6rem;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-surface);
+    background: var(--color-line);
+  }
+
+  .stack-cell {
+    display: flex;
+    min-height: 5.25rem;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.95rem 1.05rem;
+    background: var(--color-surface);
+    transition: background 0.18s ease;
+  }
+
+  .stack-kind {
+    color: var(--color-muted);
+    font-family: var(--font-utility);
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    transition: color 0.18s ease;
+  }
+
+  /* Proper nouns keep their casing — "TAILWINDCSS" is harder to read than the
+     name its authors ship. Weight carries the emphasis instead. */
+  .stack-name {
+    color: var(--color-ink);
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+
+  .stack-cell:hover { background: var(--color-accent-quiet); }
+  .stack-cell:hover .stack-kind { color: var(--color-accent); }
+
+  @media (max-width: 900px) {
+    .stack-table { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 620px) {
+    .stack-table { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .stack-cell { min-height: 4.75rem; padding: 0.85rem 0.9rem; }
+    .stack-name { font-size: 0.92rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack-cell, .stack-kind { transition: none; }
+  }
+</style>

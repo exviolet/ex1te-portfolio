@@ -1,0 +1,46 @@
+---
+import { Image } from 'astro:assets';
+import portrait from '../assets/identity/ex1te-portrait.webp';
+import avatar from '../assets/identity/ex1te-avatar-512.webp';
+interface Props { mode?: 'portrait' | 'avatar'; eager?: boolean; }
+const { mode = 'portrait', eager = false } = Astro.props;
+const source = mode === 'avatar' ? avatar : portrait;
+---
+
+<figure class:list={['portrait', `portrait-${mode}`]}>
+  <Image src={source} alt="Иллюстрированный портрет Бакытжана Избасарова" loading={eager ? 'eager' : 'lazy'} />
+</figure>
+
+<style>
+  /* The source art is black line work on a near-white field. On the dark theme
+     it is inverted to white line work; the frame is painted the exact colour
+     that field becomes, so the panel reads as a single rectangle.
+     Deliberately no mix-blend-mode here — blending against the page proved
+     unreliable, and this needs no backdrop to be correct. */
+  .portrait {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-surface);
+    background: var(--portrait-field);
+  }
+  .portrait img { width: 100%; height: auto; filter: invert(1); }
+  :global(:root[data-theme='light']) .portrait img { filter: none; }
+
+  /* Corner brackets: the one decorative move, in the accent. */
+  .portrait::before,
+  .portrait::after {
+    content: '';
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border: 2px solid var(--color-accent);
+    /* Above the image: ::before would otherwise paint underneath it. */
+    z-index: 1;
+  }
+  .portrait::before { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: var(--radius-surface); }
+  .portrait::after { right: 0; bottom: 0; border-top: 0; border-left: 0; border-bottom-right-radius: var(--radius-surface); }
+
+  .portrait-avatar { max-width: 320px; }
+</style>

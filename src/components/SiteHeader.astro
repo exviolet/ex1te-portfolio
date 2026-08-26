@@ -1,0 +1,104 @@
+---
+import Icon from './Icon.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { contact } from '../data/contact';
+const path = Astro.url.pathname;
+const links = [
+  { href: '/work', label: 'Работы' },
+  { href: '/about', label: 'Обо мне' },
+  { href: '/contact', label: 'Контакты' },
+];
+const active = (href: string) => href === '/work' ? path.startsWith('/work') : path === href;
+---
+
+<header class="site-header">
+  <div class="shell header-inner">
+    <a class="wordmark" href="/" aria-label="Бакытжан Избасаров — главная">[ BAKYTZHAN IZBASSAROV ]</a>
+
+    <nav aria-label="Основная навигация">
+      {links.map((link) => <a href={link.href} aria-current={active(link.href) ? 'page' : undefined}>{link.label}</a>)}
+    </nav>
+
+    <div class="header-actions">
+      <ThemeToggle />
+      <a class="icon-action" href={contact.github} aria-label="GitHub">
+        <Icon name="github" size={17} />
+      </a>
+      {/* Download arrow: points down into a tray, because the CV is a file to take away. */}
+      <a class="pill" href="/cv.pdf"><Icon name="download" size={15} />CV</a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { border-bottom: 1px solid var(--color-line); }
+  .header-inner { min-height: 68px; display: flex; align-items: center; gap: 1.75rem; }
+
+  .wordmark {
+    color: var(--color-ink);
+    font-family: var(--font-utility);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  nav { display: flex; align-items: center; gap: 1.4rem; margin-right: auto; }
+  nav a {
+    position: relative;
+    color: var(--color-muted);
+    font-family: var(--font-utility);
+    font-size: 0.76rem;
+    text-decoration: none;
+  }
+  /* The active marker is the house separator, and its slot is reserved on every
+     link — so hover previews the marker instead of introducing a second piece of
+     grammar, and nothing reflows when it appears. */
+  /* Vertical padding gives the link a real hit area; the text box alone was
+     18px tall, under the 24x24 minimum of WCAG 2.2 SC 2.5.8. */
+  nav a { padding-left: 0.72rem; padding-block: 0.6rem; }
+  nav a::before {
+    content: '/';
+    /* Alt-text syntax keeps the marker out of the accessibility tree: it is
+       decorative, and `aria-current` already carries the state. The plain
+       declaration above stays as the fallback where the syntax is unsupported. */
+    content: '/' / '';
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transform: translateX(-3px);
+    color: var(--color-accent);
+    transition:
+      opacity var(--dur-quick) var(--ease-signature),
+      transform var(--dur-quick) var(--ease-signature);
+  }
+  nav a:hover { color: var(--color-ink); }
+  nav a:hover::before { opacity: 0.55; transform: translateX(0); }
+  nav a[aria-current='page'] { color: var(--color-ink); }
+  nav a[aria-current='page']::before { opacity: 1; transform: translateX(0); }
+
+  .header-actions { display: flex; align-items: center; gap: 0.55rem; }
+  .header-actions .pill { min-height: 36px; padding-inline: 0.85rem; }
+  .icon-action {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-pill);
+    color: var(--color-muted);
+  }
+  .icon-action:hover { color: var(--color-ink); background: var(--color-raised); }
+
+  @media (max-width: 860px) {
+    .header-inner { gap: 1rem; }
+    nav { gap: 0.9rem; }
+    nav a { font-size: 0.72rem; }
+    .wordmark { font-size: 0.72rem; }
+  }
+  @media (max-width: 620px) {
+    .header-inner { flex-wrap: wrap; padding-block: 0.75rem; row-gap: 0.75rem; }
+    .wordmark { margin-right: auto; }
+    nav { order: 3; width: 100%; margin: 0; justify-content: space-between; }
+    nav a { padding-block: 0.8rem; }
+  }
+</style>

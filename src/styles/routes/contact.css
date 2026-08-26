@@ -1,0 +1,8 @@
+.contact-page { min-height: calc(100vh - 140px); display: grid; align-items: center; padding-block: var(--space-3xl); }
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(300px, 0.8fr); gap: var(--space-2xl); align-items: end; }
+.contact-page h1 { margin-bottom: 1.5rem; }
+.contact-lead { max-width: 760px; color: var(--color-body); font-size: 1.25rem; }
+.contact-details { padding-top: 1.5rem; border-top: 1px solid var(--color-line); }
+.contact-details p { margin-bottom: 1.3rem; color: var(--color-muted); }
+.contact-note { margin-top: 1.6rem; color: var(--color-muted); font-size: 0.78rem; }
+@media (max-width: 760px) { .contact-page { align-items: start; min-height: 0; } .contact-grid { grid-template-columns: 1fr; } }

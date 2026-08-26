@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProjectPreview from '../../components/ProjectPreview.astro';
+import '../../styles/routes/work.css';
+
+const work = (await getCollection('work', ({ data }) => data.published)).sort((a, b) => a.data.homepageOrder - b.data.homepageOrder);
+const featured = work.find((entry) => entry.data.featured) ?? work[0];
+const secondary = work.filter((entry) => entry.id !== featured.id);
+---
+
+<BaseLayout title="Работы / Бакытжан Избасаров" description="Коммерческие и самостоятельные frontend-проекты Бакытжана Избасарова." routeClass="route-work">
+  <main>
+    <header class="work-intro shell"><p class="utility">Work</p><h1>Работы</h1><p>Четыре проекта показывают разные стороны одной специализации: сложные интерфейсы, состояние, ограничения среды и поставку работающего продукта.</p></header>
+    <section class="work-list shell">
+      <div class="work-featured"><ProjectPreview entry={featured} mode="featured" eager={true} /></div>
+      <div class="work-secondary">{secondary.map((entry) => <ProjectPreview entry={entry} mode="index" />)}</div>
+    </section>
+    <section class="work-supporting"><div class="shell two-column"><h2>Другие материалы</h2><p>Тексты, эксперименты и менее формальные проекты находятся на отдельной <a href="https://ex1te.pages.dev/">Personal Platform</a>.</p></div></section>
+  </main>
+</BaseLayout>

@@ -1,0 +1,84 @@
+/* Visual direction: docs/design/reference-board.md
+   Dark is the base. Light is an explicit opt-in via [data-theme="light"].
+   Never define a colour only inside the light block. */
+
+:root {
+  color-scheme: dark;
+
+  --color-bg: #0e0e10;
+  --color-surface: #17171a;
+  --color-raised: #1f1f24;
+  --color-ink: #f2f2ef;
+  --color-body: #b6b7bf;
+  --color-muted: #8a8a92;
+  --color-line: #2a2a30;
+  --color-line-strong: #3a3a44;
+
+  /* One accent. Candidates compared on screen; see reference-board.md. */
+  --color-accent: #5ee6a8;
+  --color-accent-ink: #0e0e10;
+  --color-accent-quiet: #1b3b2d;
+  /* Hover darkens the accent rather than fading the pill. Fading dropped the
+     white-on-green pair to 4.16:1 in light theme — below AA, exactly while the
+     pointer was on the primary action. Measured: 10.68:1 dark, 6.39:1 light. */
+  --color-accent-hover: #4fd89b;
+
+  /* The portrait art's field after inversion. Matched exactly so the frame
+     reads as one rectangle rather than a plate inside a plate. */
+  --portrait-field: #010101;
+
+  /* Footer watermark: an inert base and the colour the cursor spotlight reveals. */
+  --ghost-base: #1f1f24;
+  --ghost-glow: #5ee6a8;
+
+  --font-display: "Unbounded", "Onest", Arial, sans-serif;
+  --font-body: "Onest", Arial, Helvetica, sans-serif;
+  --font-utility:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-surface: 12px;
+  --radius-inner: 8px;
+  --radius-pill: 999px;
+
+  --shell: 1280px;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.25rem;
+  --space-2xl: 3.5rem;
+  --space-3xl: 5rem;
+
+  /* Motion. Extracted from what already shipped, not invented: the signature
+     curve is the one the section reveals and the workspace handover already
+     use (GSAP power2.out), and exits run at roughly 0.6x the entrance, as the
+     footer watermark already does. Personality is Premium — decelerating
+     curves, no overshoot anywhere. */
+  --ease-signature: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-exit: cubic-bezier(0.32, 0, 0.67, 0);
+  --dur-quick: 140ms;
+  --dur-base: 340ms;
+  --dur-slow: 550ms;
+  --dur-theme: 260ms;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg: #fbfbfa;
+  --color-surface: #ffffff;
+  --color-raised: #f2f2f0;
+  --color-ink: #14151a;
+  --color-body: #4a4d57;
+  --color-muted: #63676f;
+  --color-line: #e3e3e6;
+  --color-line-strong: #d0d0d5;
+
+  --color-accent: #0a7d50;
+  --color-accent-ink: #ffffff;
+  --color-accent-quiet: #e2f5ec;
+  --color-accent-hover: #096d46;
+  --portrait-field: #fefefe;
+  --ghost-base: #eeeeec;
+  --ghost-glow: #0a7d50;
+}

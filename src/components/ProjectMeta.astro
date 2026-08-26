@@ -1,0 +1,16 @@
+---
+interface Props { status: 'production' | 'pre-launch' | 'released' | 'building'; role: string; period: string; compact?: boolean; }
+const { status, role, period, compact = false } = Astro.props;
+const labels = { production: 'Production', 'pre-launch': 'Pre-launch', released: 'Released', building: 'In development' } as const;
+---
+
+<ul class:list={['project-meta', { compact }]} aria-label="Метаданные проекта">
+  <li>{labels[status]}</li>
+  <li>{role}</li>
+  <li>{period}</li>
+</ul>
+
+<style>
+  .project-meta { display: grid; gap: 0.35rem; margin: 0; list-style: none; color: var(--color-muted); font-family: var(--font-utility); font-size: 0.76rem; }
+  .project-meta.compact { font-size: 0.72rem; }
+</style>
