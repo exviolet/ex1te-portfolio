@@ -50,23 +50,35 @@ import Icon from './Icon.astro';
   apply(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
 
   let settle: number | undefined;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   toggle?.addEventListener('click', () => {
     const root = document.documentElement;
     const next = root.dataset.theme === 'light' ? 'dark' : 'light';
 
-    /* Flag the swap so motion.css applies its colour transition only while the
-       palette is actually changing. A universal transition left on at rest
-       would tax every hover on the page for the sake of one click. */
+    const swap = () => {
+      apply(next);
+      try {
+        localStorage.setItem('ex1te-theme', next);
+      } catch {
+        /* private mode or blocked storage: the choice just does not persist */
+      }
+    };
+
+    /* Where View Transitions exist, the diagonal wipe owns the handover and the
+       colour transition must stay out of it — running both would animate the
+       palette underneath a snapshot that is already animating. */
+    if (!reduced.matches && typeof document.startViewTransition === 'function') {
+      document.startViewTransition(swap);
+      return;
+    }
+
+    /* Fallback: flag the swap so motion.css applies its colour transition only
+       while the palette is actually changing. A universal transition left on at
+       rest would tax every hover on the page for the sake of one click. */
     root.dataset.themeAnim = '';
     window.clearTimeout(settle);
     settle = window.setTimeout(() => delete root.dataset.themeAnim, 320);
-
-    apply(next);
-    try {
-      localStorage.setItem('ex1te-theme', next);
-    } catch {
-      /* private mode or blocked storage: the choice just does not persist */
-    }
+    swap();
   });
 </script>

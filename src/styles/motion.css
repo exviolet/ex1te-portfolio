@@ -39,6 +39,22 @@ a, button {
   }
 }
 
+/* Theme handover as a diagonal wipe, travelling from the right edge to the left.
+   The outgoing snapshot is held still and the incoming theme is revealed under a
+   slanted band, so the two themes never cross-fade into mud. Guarded twice: the
+   API must exist, and reduced motion falls back to the colour transition above. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (view-transition-name: root) {
+    ::view-transition-old(root) { animation: none; }
+    ::view-transition-new(root) { animation: var(--dur-wipe) var(--ease-wipe) both theme-wipe; }
+  }
+}
+
+@keyframes theme-wipe {
+  from { clip-path: polygon(145% -20%, 115% -20%, 160% 120%, 190% 120%); }
+  to { clip-path: polygon(145% -20%, -45% -20%, -10% 120%, 190% 120%); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }

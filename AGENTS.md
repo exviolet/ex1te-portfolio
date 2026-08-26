@@ -14,6 +14,7 @@ Employer-facing frontend portfolio. It is separate from `ex1te.pages.dev` and mu
 - Tailwind is permitted but not adopted; the stylesheet is token-driven and small. Adopt it only if the author asks.
 - GSAP drives four places and no more: the name assembling letter by letter, the single section reveal (`[data-reveal]`), the footer watermark, and the project-panel handover. Switching itself is CSS-only — radio inputs plus `:checked` — and GSAP animates only the handover between panels. All of it is gated on `html[data-motion="ready"]`, so the page reads fully without JavaScript. Do not add a fifth site, and do not widen the reveal: 14px, once, no scrub is the cap.
 - State feedback — hover, press, theme swap, active markers — is CSS only, never GSAP. Timings come from the `--dur-*` and `--ease-*` tokens; do not hand-pick new durations.
+- The theme swap uses the View Transitions API: a diagonal band wipes from the right edge to the left over `--dur-wipe`, revealing the incoming theme while the outgoing snapshot is held still. Guarded by `@supports (view-transition-name: root)` and by reduced motion, both falling back to the 260ms colour transition. This is the one place where a symmetric ease is correct — it is a whole-canvas handover, not an element entrance.
 - Do not turn the site into a React SPA.
 - Client JavaScript must stay isolated to components that require it, and every interaction must work without it.
 
