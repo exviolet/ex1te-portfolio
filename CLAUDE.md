@@ -27,7 +27,7 @@ node --test --test-name-pattern 'CV placeholder' tests/*.test.mjs   # один �
 
 ## Архитектура
 
-Astro 7, `output: 'static'`, `trailingSlash: 'never'`, TypeScript strict, zero client-side JS (в `src/` нет ни `client:*`-директив, ни `<script>` — это осознанное состояние, не случайность).
+Astro 7, `output: 'static'`, `trailingSlash: 'never'`, TypeScript strict. `client:*`-директив нет и не должно быть — фреймворковых компонентов на клиенте не существует. `<script>` есть в четырёх компонентах (`PageMotion`, `ProjectRail`, `ThemeToggle`, `Portrait`), и все они — усиление: контент читается и работает без них.
 
 **Три источника контента, у каждого своя роль:**
 

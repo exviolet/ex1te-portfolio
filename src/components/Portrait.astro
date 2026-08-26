@@ -1,14 +1,25 @@
 ---
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import portrait from '../assets/identity/ex1te-portrait.webp';
 import avatar from '../assets/identity/ex1te-avatar-512.webp';
-interface Props { mode?: 'portrait' | 'avatar'; eager?: boolean; }
-const { mode = 'portrait', eager = false } = Astro.props;
+import photo from '../assets/identity/ex1te-photo.webp';
+
+interface Props { mode?: 'portrait' | 'avatar'; eager?: boolean; reveal?: boolean }
+const { mode = 'portrait', eager = false, reveal = false } = Astro.props;
 const source = mode === 'avatar' ? avatar : portrait;
+
+/* The photo is painted as a background on script-built cells, never as an <img>,
+   so nothing extra is requested until the reveal actually runs. */
+const photoAsset = reveal ? await getImage({ src: photo, width: 900, height: 900, format: 'webp' }) : null;
 ---
 
-<figure class:list={['portrait', `portrait-${mode}`]}>
+<figure
+  class:list={['portrait', `portrait-${mode}`, reveal && 'portrait-reveal']}
+  data-portrait={reveal ? '' : undefined}
+  data-photo={photoAsset?.src}
+>
   <Image src={source} alt="Иллюстрированный портрет Бакытжана Избасарова" loading={eager ? 'eager' : 'lazy'} />
+  {reveal && <span class="portrait-pixels" aria-hidden="true"></span>}
 </figure>
 
 <style>
@@ -25,10 +36,11 @@ const source = mode === 'avatar' ? avatar : portrait;
     border-radius: var(--radius-surface);
     background: var(--portrait-field);
   }
-  .portrait img { width: 100%; height: auto; filter: invert(1); }
+  .portrait img { display: block; width: 100%; height: auto; filter: invert(1); }
   :global(:root[data-theme='light']) .portrait img { filter: none; }
 
-  /* Corner brackets: the one decorative move, in the accent. */
+  /* Corner brackets: the one decorative move, in the accent. Above the pixels,
+     so the frame survives the reveal. */
   .portrait::before,
   .portrait::after {
     content: '';
@@ -36,11 +48,133 @@ const source = mode === 'avatar' ? avatar : portrait;
     width: 26px;
     height: 26px;
     border: 2px solid var(--color-accent);
-    /* Above the image: ::before would otherwise paint underneath it. */
-    z-index: 1;
+    z-index: 2;
   }
   .portrait::before { top: 0; left: 0; border-right: 0; border-bottom: 0; border-top-left-radius: var(--radius-surface); }
   .portrait::after { right: 0; bottom: 0; border-top: 0; border-left: 0; border-bottom-right-radius: var(--radius-surface); }
 
   .portrait-avatar { max-width: 320px; }
+
+  /* Reveal layer. Cells are created by script and carry the photo as a
+     background slice each, so the grid exists only where it can animate. */
+  .portrait-pixels {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    pointer-events: none;
+  }
+  .portrait-pixels :global(.portrait-pixel) {
+    opacity: 0;
+    background-repeat: no-repeat;
+    /* Cells butt against each other; a hairline gap between them would read as
+       a grid rather than as the picture assembling. */
+    outline: 1px solid transparent;
+  }
 </style>
+
+<script>
+  /* The identity portrait assembles into the real photograph, block by block.
+     This is the site's one playing mechanism, so it answers input and never
+     runs on its own: a pointer on desktop, entering the viewport on touch. */
+  const figure = document.querySelector<HTMLElement>('[data-portrait]');
+  const layer = figure?.querySelector<HTMLElement>('.portrait-pixels');
+  const photo = figure?.dataset.photo;
+
+  if (figure && layer && photo) {
+    const GRID = 14;
+    const DURATION = 760;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    let cells: HTMLElement[] = [];
+    let order: number[] = [];
+    let shown = 0;
+    let raf = 0;
+    let startTs = 0;
+    let from = 0;
+    let to = 0;
+
+    function build() {
+      if (cells.length) return;
+      layer!.style.gridTemplateColumns = `repeat(${GRID}, 1fr)`;
+      layer!.style.gridTemplateRows = `repeat(${GRID}, 1fr)`;
+      const frag = document.createDocumentFragment();
+      for (let row = 0; row < GRID; row += 1) {
+        for (let col = 0; col < GRID; col += 1) {
+          const cell = document.createElement('span');
+          cell.className = 'portrait-pixel';
+          cell.style.backgroundImage = `url("${photo}")`;
+          cell.style.backgroundSize = `${GRID * 100}% ${GRID * 100}%`;
+          cell.style.backgroundPosition = `${(col / (GRID - 1)) * 100}% ${(row / (GRID - 1)) * 100}%`;
+          frag.appendChild(cell);
+          cells.push(cell);
+        }
+      }
+      layer!.appendChild(frag);
+
+      /* Shuffled, so the picture arrives as scattered blocks rather than a
+         wipe — a wipe is already the theme transition's job. */
+      order = cells.map((_, index) => index);
+      for (let i = order.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+    }
+
+    /* Only the cells that crossed the threshold this frame are touched;
+       rewriting all 196 every frame is wasted layout work. */
+    function apply(value: number) {
+      const next = Math.round(value);
+      const prev = Math.round(shown);
+      if (next !== prev) {
+        const lo = Math.min(next, prev);
+        const hi = Math.max(next, prev);
+        for (let i = lo; i < hi; i += 1) {
+          cells[order[i]].style.opacity = i < next ? '1' : '0';
+        }
+      }
+      shown = value;
+    }
+
+    function frame(ts: number) {
+      if (!startTs) startTs = ts;
+      const t = Math.min(1, (ts - startTs) / DURATION);
+      apply(from + (to - from) * t);
+      raf = t < 1 ? requestAnimationFrame(frame) : 0;
+    }
+
+    function play(forward: boolean) {
+      build();
+      cancelAnimationFrame(raf);
+      startTs = 0;
+      from = shown;
+      to = forward ? cells.length : 0;
+      /* Reduced motion still gets the photograph, just not the assembling. */
+      if (reduced.matches) {
+        apply(to);
+        return;
+      }
+      raf = requestAnimationFrame(frame);
+    }
+
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      figure.addEventListener('pointerenter', () => play(true));
+      figure.addEventListener('pointerleave', () => play(false));
+    } else {
+      /* No hover to answer on touch, so the viewport is the input. Once only:
+         re-running on every scroll past would be decoration. */
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              play(true);
+              observer.disconnect();
+            }
+          }
+        },
+        { threshold: 0.55 },
+      );
+      observer.observe(figure);
+    }
+  }
+</script>
