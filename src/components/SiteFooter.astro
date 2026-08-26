@@ -31,6 +31,8 @@ const channels = [
         <a class="pill" href={contact.cv}>Резюме<Icon name="download" size={15} /></a>
       </div>
       <p class="footer-rights">© {year} {site.name}</p>
+      {/* Plain anchor: works with scripts off, and the header carries the id. */}
+      <a class="footer-to-top" href="#top">Наверх<Icon name="arrow-up" size={14} /></a>
     </div>
 
     <nav class="footer-nav" aria-label="Навигация в подвале">
@@ -58,6 +60,20 @@ const channels = [
 
 <style>
   .site-footer { position: relative; overflow: hidden; border-top: 1px solid var(--color-line); }
+
+  .footer-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+    padding-block: 0.35rem;
+    color: var(--color-muted);
+    font-family: var(--font-utility);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+  .footer-to-top:hover { color: var(--color-accent); }
 
   .footer-top {
     display: grid;

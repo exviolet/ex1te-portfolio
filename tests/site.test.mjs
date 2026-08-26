@@ -136,7 +136,9 @@ test('metadata never uses centred dot separators', async () => {
 
 test('homepage sections are indexed and named', async () => {
   const html = await built('/');
-  for (const [index, name] of [['00', 'Identity'], ['01', 'Projects'], ['02', 'Experience'], ['03', 'Stack']]) {
+  // Identity carries no marker: the h1 is the page heading, not section 00.
+  assert.doesNotMatch(html, /SECTION\s*<span[^>]*>\/\/<\/span>\s*00/);
+  for (const [index, name] of [['01', 'Projects'], ['02', 'Experience'], ['03', 'Stack']]) {
     assert.match(html, new RegExp(`SECTION\\s*<span[^>]*>//</span>\\s*${index}`), `marker ${index}`);
     assert.match(html, new RegExp(name), `section name ${name}`);
   }

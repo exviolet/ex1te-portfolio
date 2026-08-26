@@ -69,14 +69,16 @@
 
 @media (max-width: 900px) {
   .identity-body { grid-template-columns: 1fr; align-items: start; }
-  .identity-body .portrait { max-width: 260px; }
+  /* Fills the column instead of sitting as a thumbnail with dead space
+     beside it — the board calls the portrait an equal object, not an avatar. */
+  .identity-body .portrait { max-width: 420px; }
 }
 @media (max-width: 620px) {
   .route-home main > section { padding-bottom: var(--space-2xl); }
   .identity-description { font-size: 1rem; }
   .identity-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .identity-actions .pill { justify-content: center; }
-  .identity-body .portrait { max-width: 200px; }
+  .identity-body .portrait { max-width: none; }
   .timeline > li { grid-template-columns: 1fr; gap: 0.35rem; }
   .timeline-stamp { line-height: 1.4; }
 }

@@ -22,6 +22,7 @@ a, button {
   a:hover .icon[data-icon='arrow-right'] { transform: translateX(3px); }
   a:hover .icon[data-icon='arrow-up-right'] { transform: translate(2px, -2px); }
   a:hover .icon[data-icon='download'] { transform: translateY(2px); }
+  a:hover .icon[data-icon='arrow-up'] { transform: translateY(-2px); }
 
   /* Theme handover. The attribute is set by the toggle only for the length of
      the swap, so nothing carries a universal transition at rest — that is what

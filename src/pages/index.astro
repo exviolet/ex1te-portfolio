@@ -29,8 +29,10 @@ const stamp = (period: string) => {
 
 <BaseLayout title={`${site.name} / ${site.role}`} description={site.description} routeClass="route-home">
   <main>
-    <section class="identity shell" aria-labelledby="identity-title">
-      <SectionHead index="00" name="Identity" id="identity-title" as="p" />
+    {/* No section marker here: the h1 with the name is the page's own heading,
+        and "IDENTITY // 00" labelled the person as a numbered section of a
+        document he is not inside. The index now starts at the first real one. */}
+    <section class="identity shell">
       <div class="identity-body">
         <div class="identity-copy">
           <SplitName first={firstName} last={lastName} label={site.name} />

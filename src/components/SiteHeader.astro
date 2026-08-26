@@ -11,7 +11,7 @@ const links = [
 const active = (href: string) => href === '/work' ? path.startsWith('/work') : path === href;
 ---
 
-<header class="site-header">
+<header class="site-header" id="top">
   <div class="shell header-inner">
     <a class="wordmark" href="/" aria-label="Бакытжан Избасаров — главная">[ BAKYTZHAN IZBASSAROV ]</a>
 
@@ -31,7 +31,16 @@ const active = (href: string) => href === '/work' ? path.startsWith('/work') : p
 </header>
 
 <style>
-  .site-header { border-bottom: 1px solid var(--color-line); }
+  /* Sticky: navigation and the theme toggle stay reachable on a long page.
+     An opaque background is required — without it the scrolled content shows
+     through, and the header has no surface of its own. */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-bg);
+  }
   .header-inner { min-height: 68px; display: flex; align-items: center; gap: 1.75rem; }
 
   .wordmark {
@@ -100,5 +109,11 @@ const active = (href: string) => href === '/work' ? path.startsWith('/work') : p
     .wordmark { margin-right: auto; }
     nav { order: 3; width: 100%; margin: 0; justify-content: space-between; }
     nav a { padding-block: 0.8rem; }
+    /* Static here. The header wraps to two rows at this width (nav needs its own
+       line once the touch targets are large enough), which is 116px — 14% of a
+       844px screen held permanently. The footer's "Наверх" is the way back on
+       mobile; a single-row sticky header would need a menu button, and that
+       means JavaScript for navigation. */
+    .site-header { position: static; }
   }
 </style>
