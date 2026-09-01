@@ -49,7 +49,7 @@ test('work, about, and contact have distinct responsibilities', async () => {
   assert.match(about, /React Native \+ Expo/);
   assert.match(about, /Docker \+ Docker Compose/);
   assert.match(contact, /Открыт к frontend-позициям/);
-  assert.match(contact, /Контактные значения являются локальными placeholders/);
+  assert.match(contact, /Файл резюме — placeholder/);
 });
 
 test('case pages render content collection stories', async () => {
@@ -155,9 +155,11 @@ test('the footer carries the closing call on every route', async () => {
   for (const route of ['/', '/work', '/about', '/contact']) {
     const html = await built(route);
     const footer = html.slice(html.indexOf('<footer'));
-    assert.match(footer, /Давайте поговорим/, route);
+    assert.match(footer, /Расскажите про задачу/, route);
+    // The closing line names Telegram, so the accent button has to land there.
+    assert.match(footer, /href="https:\/\/t\.me\/ex1te0"/, route);
     assert.match(footer, /Меню/, route);
-    assert.match(footer, /Каналы/, route);
+    assert.match(footer, /Соцсети/, route);
     assert.match(footer, /© \d{4} Бакытжан Избасаров/, route);
     // Removed on request: build credit, location, and the live clock.
     assert.doesNotMatch(footer, /GSAP/, route);
@@ -186,6 +188,15 @@ test('the homepage does not repeat the closing call above the footer', async () 
   const html = await built('/');
   const main = html.slice(html.indexOf('<main'), html.indexOf('<footer'));
   assert.doesNotMatch(main, /SECTION\s*<span[^>]*>\/\/<\/span>\s*04/);
+});
+
+test('the open-ended experience period is anchored to a stage', async () => {
+  const html = await built('/');
+  // "настоящее время" in the header is a claim about now; the timeline has to
+  // say which stage is still running, or the last stamp reads as the end.
+  assert.match(html, /Август 2025 — настоящее время/);
+  assert.match(html, /timeline-now/);
+  assert.match(html, /сейчас/);
 });
 
 test('the header wordmark is the person, not a category', async () => {

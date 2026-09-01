@@ -12,27 +12,32 @@ const menu = [
   { href: '/contact', label: 'Контакты' },
 ];
 
-/* Only channels that actually resolve get an icon and a real href.
-   `telegramOrLinkedIn` is still a placeholder in src/data/contact.ts. */
-const channels = [
-  { href: `mailto:${contact.email}`, label: 'Email', icon: 'mail-out' },
+/* Every entry resolves to a real account. Email is not here on purpose — see
+   the note in src/data/contact.ts. */
+const socials = [
   { href: contact.github, label: 'GitHub', icon: 'github' },
-  { href: contact.telegramOrLinkedIn, label: 'Telegram / LinkedIn', icon: 'telegram' },
+  { href: contact.telegram, label: 'Telegram', icon: 'telegram' },
+  { href: contact.instagram, label: 'Instagram', icon: 'instagram' },
 ];
 ---
 
 <footer class="site-footer">
   <div class="shell footer-top">
     <div class="footer-call">
-      <p class="footer-line">{site.availability}<br />Давайте поговорим.</p>
+      {/* Not the availability line any more: `site.availability` already speaks
+          in the identity block above, and a display-size repeat of it spent the
+          largest type in the footer on something the page had already said.
+          This states the next step instead, so the sentence and the button
+          below it promise the same thing. */}
+      <p class="footer-line">Расскажите про задачу —<br />отвечу в Telegram.</p>
       <div class="footer-actions">
-        {/* Diagonal arrow: both actions send the visitor out of the page. */}
-        <a class="pill pill-accent" href="/contact">Написать<Icon name="arrow-up-right" size={15} /></a>
+        {/* Diagonal arrow: both actions send the visitor out of the page.
+            "Написать" goes to Telegram, not /contact — the line above names
+            the channel, and a button landing somewhere else would break it. */}
+        <a class="pill pill-accent" href={contact.telegram}>Написать<Icon name="arrow-up-right" size={15} /></a>
         <a class="pill" href={contact.cv}>Резюме<Icon name="download" size={15} /></a>
       </div>
       <p class="footer-rights">© {year} {site.name}</p>
-      {/* Plain anchor: works with scripts off, and the header carries the id. */}
-      <a class="footer-to-top" href="#top">Наверх<Icon name="arrow-up" size={14} /></a>
     </div>
 
     <nav class="footer-nav" aria-label="Навигация в подвале">
@@ -41,11 +46,11 @@ const channels = [
     </nav>
 
     <div class="footer-nav">
-      <p class="footer-heading">Каналы</p>
+      <p class="footer-heading">Соцсети</p>
       <ul>
-        {channels.map((channel) => (
+        {socials.map((social) => (
           <li>
-            <a href={channel.href}><Icon name={channel.icon} size={14} />{channel.label}</a>
+            <a href={social.href}><Icon name={social.icon} size={14} />{social.label}</a>
           </li>
         ))}
       </ul>
@@ -60,20 +65,6 @@ const channels = [
 
 <style>
   .site-footer { position: relative; overflow: hidden; border-top: 1px solid var(--color-line); }
-
-  .footer-to-top {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-top: 0.6rem;
-    padding-block: 0.35rem;
-    color: var(--color-muted);
-    font-family: var(--font-utility);
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-  }
-  .footer-to-top:hover { color: var(--color-accent); }
 
   .footer-top {
     display: grid;
@@ -119,9 +110,14 @@ const channels = [
   }
 
   /* Oversized watermark, clipped by the footer. Decorative only — the accessible
-     name of the site is already in the header and the copyright line. */
+     name of the site is already in the header and the copyright line.
+     `pointer-events: none` is load-bearing, not hygiene: at this size the glyph
+     ink overflows the 0.8 line box by ~70px upwards and Chrome hit-tests that
+     overflow, so without it the watermark swallows the pointer well above its
+     own box. The spotlight listeners are on .site-footer, not here. */
   .footer-ghost {
     position: relative;
+    pointer-events: none;
     margin-top: var(--space-2xl);
     margin-bottom: -0.28em;
     font-family: var(--font-display);

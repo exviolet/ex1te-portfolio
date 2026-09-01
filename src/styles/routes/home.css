@@ -2,9 +2,19 @@
    identity is the widest and loudest, projects is the working surface,
    experience is a dense list, stack is a reference table, contact is one line. */
 
+/* Every section used to end on the same var(--space-3xl), which made the page
+   scroll past at a constant beat no matter what it was showing. The gaps now
+   say something: identity gets the most room because it is the loudest and
+   needs to land; stack sits close under experience because it is the reference
+   table for the work described above it, not a fifth independent claim. */
 .route-home main > section { padding-bottom: var(--space-3xl); }
 .route-home main > section:first-child { padding-top: var(--space-xl); }
+.route-home .identity { padding-bottom: 7rem; }
+.route-home .experience-section { padding-bottom: var(--space-2xl); }
 
+/* Only PROJECTS opens with prose now. A lead paragraph is for a section that
+   needs explaining before it can be read; the timeline and the stack table do
+   not, and giving all three the same opener was the flat rhythm itself. */
 .section-lead {
   max-width: 68ch;
   margin: 1.5rem 0 2.25rem;
@@ -12,6 +22,15 @@
   font-size: 1.05rem;
 }
 .section-lead .sep { color: var(--color-accent); }
+
+.experience-meta {
+  margin: 1.1rem 0 1.5rem;
+  color: var(--color-muted);
+  font-family: var(--font-utility);
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+}
+.experience-meta .sep { color: var(--color-accent); }
 
 /* ── 00 Identity ───────────────────────────────────────────────── */
 .identity-body {
@@ -47,6 +66,27 @@
 .identity-facts dd.open { color: var(--color-accent); }
 
 /* ── 02 Experience ─────────────────────────────────────────────── */
+/* The one narrow section — this is what breaks the identical-measure march down
+   the page: 01 and 03 stay wide surfaces, 02 pulls in. A dense list wants a
+   reading measure, and the timeline body was already capped at 62ch inside a
+   1247px column, so most of that width was dead margin anyway.
+
+   Capping the children rather than narrowing `--shell` on the section itself:
+   `.shell` centres what it sizes, so the token route floated the block in the
+   middle of the page and broke the left spine that every other section — the
+   name, the rail, the stack table — is anchored to. Only the right edge is
+   allowed to pull in.
+
+   The head bar is exempt and still spans the full shell. Without that, on a
+   maximized window the whole section stopped ~500px short of everything around
+   it and read as truncated rather than dense. Keeping the rule and the
+   `[ SECTION // 02 ]` marker on the page's own edge anchors the section at full
+   width; only the list inside it pulls in, which is the difference between an
+   indent and a hole. The list cannot simply run wider instead: `.timeline-body
+   p` is capped at 62ch, so a wider block would move the hairlines out and leave
+   the dead space inside the section. */
+.route-home .experience-section > *:not(.section-head) { max-width: 780px; }
+
 .timeline { list-style: none; border-top: 1px solid var(--color-line); }
 .timeline > li {
   display: grid;
@@ -57,13 +97,24 @@
   border-bottom: 1px solid var(--color-line);
 }
 .timeline-stamp {
-  color: var(--color-accent);
+  display: grid;
+  gap: 0.3rem;
   font-family: var(--font-utility);
   font-size: 0.76rem;
   font-variant-numeric: tabular-nums;
-  line-height: 1.9;
 }
-.timeline-rule { display: none; }
+/* 1.9 optically centres the stamp against the 1.2rem title beside it. It sits
+   on the date rather than the column so the "сейчас" marker below is not
+   pushed out by the same leading. */
+.timeline-date { color: var(--color-accent); line-height: 1.9; }
+.timeline-now {
+  color: var(--color-muted);
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.timeline-now span { color: var(--color-accent); }
 .timeline-body h3 { font-family: var(--font-body); font-size: 1.2rem; font-weight: 600; letter-spacing: -0.01em; }
 .timeline-body p { max-width: 62ch; margin-top: 0.5rem; color: var(--color-body); font-size: 0.98rem; }
 
@@ -75,10 +126,16 @@
 }
 @media (max-width: 620px) {
   .route-home main > section { padding-bottom: var(--space-2xl); }
+  /* The uneven gaps have to be restated, not inherited: `.route-home .identity`
+     outranks `.route-home main > section`, so the desktop 7rem would survive
+     into a 844px screen and spend 13% of it on one gap. Same shape, compressed:
+     identity still gets the most, stack still sits close under experience. */
+  .route-home .identity { padding-bottom: var(--space-3xl); }
+  .route-home .experience-section { padding-bottom: var(--space-xl); }
   .identity-description { font-size: 1rem; }
   .identity-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .identity-actions .pill { justify-content: center; }
   .identity-body .portrait { max-width: none; }
   .timeline > li { grid-template-columns: 1fr; gap: 0.35rem; }
-  .timeline-stamp { line-height: 1.4; }
+  .timeline-date { line-height: 1.4; }
 }
