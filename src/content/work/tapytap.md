@@ -1,10 +1,10 @@
 ---
 title: TapyTap
 summary: Мобильный трекер привычек на Expo и React Native с Supabase-бэкендом, статистикой, календарём и журналом заметок.
-context: Personal mobile product
+context: Личный мобильный продукт
 status: building
-role: Solo Mobile Developer
-team: Solo
+role: Mobile Developer
+team: Соло
 period: 2025 — настоящее время
 featured: false
 homepageOrder: 4

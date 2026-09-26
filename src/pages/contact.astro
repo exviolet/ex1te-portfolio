@@ -8,9 +8,19 @@ import '../styles/routes/contact.css';
 
 <BaseLayout title={`Контакты / ${site.name}`} description="Связаться с frontend-разработчиком Бакытжаном Избасаровым." routeClass="route-contact">
   <main class="contact-page shell">
+    {/* No section markers: the board calls contact "одна строка", and a page
+        with one block has nothing to index. */}
     <div class="contact-grid">
-      <div><p class="utility">Contact</p><h1>Контакты</h1><p class="contact-lead">Открыт к frontend-позициям, связанным со сложными продуктовыми интерфейсами и UX-сценариями.</p></div>
-      <div class="contact-details"><p>{site.workFormats}</p><ContactLinks /><p class="contact-note">{contact.note}</p></div>
+      <div>
+        <p class="page-marker">[ Contact ]</p>
+        <h1>Контакты</h1>
+        <p class="contact-lead">Открыт к frontend-позициям, связанным со сложными продуктовыми интерфейсами и UX-сценариями.</p>
+      </div>
+      <div class="contact-details">
+        <p class="contact-formats">{site.availability} <span>//</span> {site.workFormats}</p>
+        <ContactLinks />
+        <p class="contact-note">{contact.note}</p>
+      </div>
     </div>
   </main>
 </BaseLayout>

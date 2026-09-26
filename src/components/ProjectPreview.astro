@@ -1,13 +1,19 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
 import ProjectMedia from './ProjectMedia.astro';
 import ProjectMeta from './ProjectMeta.astro';
 import { workMedia } from '../data/workMedia';
-interface Props { entry: CollectionEntry<'work'>; mode?: 'featured' | 'compact' | 'index'; eager?: boolean; }
-const { entry, mode = 'compact', eager = false } = Astro.props;
+/* Two modes, not three: 'compact' was declared, defaulted to, and never passed.
+   'featured' is the wide media-beside-copy card at the top of /work; 'index'
+   is a cell in the row below it. */
+interface Props { entry: CollectionEntry<'work'>; mode?: 'featured' | 'index'; eager?: boolean; }
+const { entry, mode = 'index', eager = false } = Astro.props;
 const slug = entry.id.replace(/\.md$/, '');
 const media = workMedia[slug];
-const compact = mode === 'compact';
+/* The index cells are ~400px wide in a three-across row, where the 410px media
+   frame turned every screenshot into a tall portrait crop. */
+const compact = mode === 'index';
 ---
 
 <article class:list={['project-preview', `mode-${mode}`]}>
@@ -17,7 +23,10 @@ const compact = mode === 'compact';
     <h2>{entry.data.title}</h2>
     <ProjectMeta status={entry.data.status} role={entry.data.role} period={entry.data.period} compact={compact} />
     <p class="summary">{entry.data.summary}</p>
-    <a href={`/work/${slug}`}>Открыть кейс</a>
+    {/* The homepage said "Открыть кейс" with an arrow and this one did not,
+        for no reason anyone recorded. Same action, same glyph, and the icon
+        moves the way it points. */}
+    <a class="preview-open" href={`/work/${slug}`}>Открыть кейс<Icon name="arrow-right" size={15} /></a>
   </div>
 </article>
 
@@ -28,7 +37,12 @@ const compact = mode === 'compact';
   .preview-copy { padding: 1.6rem; }
   .preview-copy h2 { margin: 0.7rem 0 1rem; }
   .summary { margin: 1.35rem 0; color: var(--color-body); }
-  .preview-copy > a { display: inline-block; padding-bottom: 0.15rem; }
-  .mode-compact .preview-copy h2 { font-size: clamp(1.65rem, 3vw, 2.4rem); }
+  .preview-open { display: inline-flex; align-items: center; gap: 0.5rem; padding-block: 0.35rem; font-family: var(--font-utility); font-size: 0.8rem; text-decoration: none; }
+  .preview-open:hover { color: var(--color-accent); }
+  /* Sized against the card, not the viewport: the global h2 clamp reads 3.4vw,
+     which on a wide screen set "InteractiveLAB" larger than its own ~400px
+     cell and clipped it. `break-word` is the guard for a longer name later. */
+  .mode-index .preview-copy h2 { font-size: clamp(1.35rem, 1.6vw, 1.85rem); overflow-wrap: break-word; }
+  .mode-index .preview-copy { padding: 1.3rem; }
   @media (max-width: 840px) { .mode-featured { grid-template-columns: 1fr; } .mode-featured :global(.project-media) { border-right: 0; border-bottom: 1px solid var(--color-line); } }
 </style>

@@ -10,6 +10,20 @@ h3 { font-size: clamp(1.35rem, 2.2vw, 2rem); }
   letter-spacing: 0.02em;
 }
 
+/* Page-level counterpart to `[ SECTION // NN ]`. The internal routes used to
+   open with a bare English word above the h1 — "Work", "About", "Contact" —
+   which belonged to no grammar at all. Brackets are the house dialect: the
+   header wordmark and every section marker already wear them. */
+.page-marker {
+  margin-bottom: 1.1rem;
+  color: var(--color-muted);
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.page-marker span { color: var(--color-accent); }
+
 .prose { max-width: 760px; }
 .prose > * + * { margin-top: 1.15rem; }
 .prose h2 { margin-top: 3.5rem; font-size: clamp(1.6rem, 2.6vw, 2.2rem); }

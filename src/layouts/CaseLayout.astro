@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
+import Icon from '../components/Icon.astro';
 import ProjectMedia from '../components/ProjectMedia.astro';
 import '../styles/routes/case.css';
 import type { WorkMedia } from '../data/workMedia';
@@ -12,37 +13,57 @@ const statusLabels = {
   released: 'Released',
   building: 'In development',
 } as const;
+
+const facts = [
+  { label: 'Роль', value: entry.data.role },
+  { label: 'Команда', value: entry.data.team },
+  { label: 'Период', value: entry.data.period },
+  { label: 'Статус', value: statusLabels[entry.data.status] },
+];
 ---
 
 <BaseLayout title={`${entry.data.title} / Бакытжан Избасаров`} description={entry.data.summary} routeClass="route-case">
   <main>
     <header class="case-opening shell">
-      <a class="case-back" href="/work">Вернуться к работам</a>
-      <p class="utility">{entry.data.context}</p>
+      {/* Arrow points the way the action goes, like every other icon here. */}
+      <a class="case-back" href="/work"><Icon name="arrow-left" size={15} />Все работы</a>
+      <p class="page-marker">[ {entry.data.context} ]</p>
       <h1>{entry.data.title}</h1>
       <p class="case-summary">{entry.data.summary}</p>
-      <div class="case-facts">
-        <div><small>Роль</small><b>{entry.data.role}</b></div>
-        <div><small>Команда</small><b>{entry.data.team}</b></div>
-        <div><small>Период</small><b>{entry.data.period}</b></div>
-        <div><small>Статус</small><b>{statusLabels[entry.data.status]}</b></div>
-      </div>
+
+      {/* One surface with hairline dividers, not four boxes. The board bans a
+          1px box around every block, and the stack table already solved this
+          the same way: a 1px gap over a line-coloured background draws the
+          dividers at any column count. */}
+      <dl class="case-facts">
+        {facts.map((fact) => (
+          <div>
+            <dt><span aria-hidden="true">//</span> {fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
+
       <ProjectMedia media={media} eager={true} />
       <slot name="caption" />
     </header>
+
     <section class="case-content shell">
       <article class="prose"><slot /></article>
       <aside class="case-aside">
-        <div>
-          <small>Технологии</small>
-          <ul>{entry.data.technologies.map((technology) => <li>{technology}</li>)}</ul>
-        </div>
-        {media.document && <a href={media.document}>Открыть отчёт</a>}
-        {media.video && <a href={media.video}>Открыть видео</a>}
+        <p class="case-aside-label"><span aria-hidden="true">//</span> Технологии</p>
+        <ul>{entry.data.technologies.map((technology) => <li>{technology}</li>)}</ul>
+        {media.document && <a class="pill" href={media.document}><Icon name="page" size={15} />Отчёт</a>}
+        {media.video && <a class="pill" href={media.video}><Icon name="media-video" size={15} />Видео</a>}
       </aside>
     </section>
-    <section class="case-next route-section">
-      <div class="shell two-column"><h2>Следующий шаг</h2><div><p>Посмотреть другие проекты или связаться.</p><p><a href="/work">Все работы</a> / <a href="/contact">Контакты</a></p></div></div>
+
+    <section class="case-next shell">
+      <p class="case-next-line">Посмотреть другие проекты или написать.</p>
+      <div class="case-next-actions">
+        <a class="pill" href="/work"><Icon name="arrow-left" size={15} />Все работы</a>
+        <a class="pill pill-accent" href="/contact">Контакты<Icon name="arrow-right" size={15} /></a>
+      </div>
     </section>
   </main>
 </BaseLayout>

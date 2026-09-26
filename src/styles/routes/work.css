@@ -1,8 +1,25 @@
-.work-intro { padding-block: var(--space-3xl) var(--space-2xl); border-bottom: 1px solid var(--color-line); }
-.work-intro p { max-width: 820px; margin-top: 1.5rem; color: var(--color-muted); font-size: 1.2rem; }
-.work-list { padding-block: var(--space-2xl) var(--space-3xl); }
-.work-featured { margin-bottom: 1.4rem; }
-.work-secondary { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem; }
-.work-supporting { padding-block: var(--space-2xl); border-top: 1px solid var(--color-line); }
-.work-supporting .two-column { align-items: center; }
-@media (max-width: 760px) { .work-secondary { grid-template-columns: 1fr; } }
+/* Same uneven-rhythm rule as the homepage: the opener gets the most room, the
+   index is the working surface, the closing note sits tight because it is an
+   aside about somewhere else, not a third claim. */
+.work-intro { padding-block: var(--space-3xl) 0; }
+.work-lead { max-width: 62ch; margin-top: 1.5rem; color: var(--color-body); font-size: 1.15rem; }
+
+.work-list { padding-block: 5.5rem var(--space-3xl); }
+.work-featured { margin-top: 2rem; margin-bottom: 1.4rem; }
+
+/* auto-fit rather than `repeat(2, 1fr)`: three secondary projects in two
+   columns left the third one alone beside an empty half. The row now fills
+   with as many as fit and stays correct when a fifth case appears. */
+.work-secondary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.4rem;
+}
+
+.work-supporting { padding-block: 0 var(--space-3xl); }
+.work-elsewhere { max-width: 56ch; margin: 1.5rem 0 1.6rem; color: var(--color-body); }
+
+@media (max-width: 760px) {
+  .work-secondary { grid-template-columns: 1fr; }
+  .work-list { padding-block: var(--space-3xl) var(--space-2xl); }
+}

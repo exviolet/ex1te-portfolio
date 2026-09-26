@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Portrait from '../components/Portrait.astro';
-import ExperienceBlock from '../components/ExperienceBlock.astro';
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import SectionHead from '../components/SectionHead.astro';
 import StackGrid from '../components/StackGrid.astro';
+import Icon from '../components/Icon.astro';
 import { site } from '../data/site';
 import '../styles/routes/about.css';
 ---
@@ -11,10 +13,35 @@ import '../styles/routes/about.css';
   <main>
     <section class="about-intro shell">
       <Portrait />
-      <div class="about-copy"><p class="utility">About</p><h1>Обо мне</h1><p>Я frontend-разработчик. Люблю интерфейсы, где визуальная часть связана с поведением: роли, состояния, навигация, ошибки и восстановление.</p><p>Основной опыт связан с React/TypeScript-продуктами STEAM.KZ. В личных проектах строю Linux-инструменты и исследую способы работы с AI-агентами.</p></div>
+      <div class="about-copy">
+        <p class="page-marker">[ About ]</p>
+        <h1>Обо мне</h1>
+        <p>Я frontend-разработчик. Люблю интерфейсы, где визуальная часть связана с поведением: роли, состояния, навигация, ошибки и восстановление.</p>
+        <p>Основной опыт связан с React/TypeScript-продуктами STEAM.KZ. В личных проектах строю Linux-инструменты и исследую способы работы с AI-агентами.</p>
+      </div>
     </section>
-    <section class="about-experience shell"><div class="route-heading"><h2>Опыт</h2><p>Одно сотрудничество с постепенным переходом от широких IT/R&D-задач к собственной frontend-зоне.</p></div><ExperienceBlock /></section>
-    <section class="about-skills shell"><div class="route-heading"><h2>Стек и платформы</h2><p>Инструменты и платформы, с которыми я работал в реальных, личных и учебных проектах.</p></div><StackGrid /></section>
-    <section class="about-personal shell"><div class="two-column"><h2>Personal Platform</h2><p>Тексты, эксперименты и личные инструменты живут отдельно на <a href={site.personalSite}>ex1te.pages.dev</a>. Job portfolio не дублирует Writing, Lab, Uses или Now.</p></div></section>
+
+    {/* These two sections used to open with `.route-heading` — a 180px mono
+        label on the left and prose on the right, twice in a row. That is the
+        "мелкий лейбл слева / описание справа" rhythm the board names as the
+        thing that reads as AI slop, and at 0.76rem the label did not read as a
+        heading at all. Same `SectionHead` bar the homepage uses. */}
+    <section class="about-experience shell" aria-labelledby="about-experience-title">
+      <SectionHead index="01" name="Experience" id="about-experience-title" />
+      <p class="about-lead">Одно сотрудничество с постепенным переходом от широких IT/R&D-задач к собственной frontend-зоне.</p>
+      <ExperienceTimeline />
+    </section>
+
+    <section class="about-skills shell" aria-labelledby="about-stack-title">
+      <SectionHead index="02" name="Stack" id="about-stack-title" />
+      <p class="about-lead">Инструменты и платформы, с которыми я работал в реальных, личных и учебных проектах.</p>
+      <StackGrid />
+    </section>
+
+    <section class="about-personal shell" aria-labelledby="about-elsewhere-title">
+      <SectionHead index="03" name="Elsewhere" id="about-elsewhere-title" />
+      <p class="about-lead">Вне работы я пишу тексты и собираю инструменты для себя. Это отдельный сайт, со своим жанром и своей вёрсткой.</p>
+      <a class="pill" href={site.personalSite}>ex1te.pages.dev<Icon name="arrow-up-right" size={15} /></a>
+    </section>
   </main>
 </BaseLayout>

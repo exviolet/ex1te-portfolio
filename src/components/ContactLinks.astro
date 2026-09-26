@@ -1,12 +1,21 @@
 ---
+import Icon from './Icon.astro';
 import { contact } from '../data/contact';
+
+/* Same channels, same icons and same order as the footer. They used to be bare
+   text pills here and icon rows there, which made one site look like two. */
+const links = [
+  { href: contact.telegram, label: 'Telegram', icon: 'telegram' },
+  { href: contact.github, label: 'GitHub', icon: 'github' },
+  { href: contact.instagram, label: 'Instagram', icon: 'instagram' },
+  { href: contact.cv, label: 'Скачать CV', icon: 'download' },
+];
 ---
 
 <div class="contact-links">
-  <a class="pill" href={contact.github}>GitHub</a>
-  <a class="pill" href={contact.telegram}>Telegram</a>
-  <a class="pill" href={contact.instagram}>Instagram</a>
-  <a class="pill" href={contact.cv}>Скачать CV</a>
+  {links.map((link) => (
+    <a class="pill" href={link.href}><Icon name={link.icon} size={15} />{link.label}</a>
+  ))}
 </div>
 
 <style>

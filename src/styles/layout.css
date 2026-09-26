@@ -1,14 +1,13 @@
+/* `.shell` is the only shared layout primitive left. `.route-section`,
+   `.route-heading` and `.two-column` were removed with the internal-route
+   pass: the first two carried the "мелкий лейбл слева / описание справа"
+   rhythm the board names as the thing that reads as AI slop, and the third
+   was only ever a big heading beside a line of prose. Sections now open with
+   `SectionHead` on every route, and their rhythm is set per route. */
 .shell { width: min(var(--shell), calc(100% - 48px)); margin-inline: auto; }
-.route-section { padding-block: var(--space-3xl); border-bottom: 1px solid var(--color-line); }
-.route-heading { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: var(--space-xl); margin-bottom: var(--space-xl); }
-.route-heading h2 { font-family: var(--font-utility); font-size: 0.76rem; font-weight: 500; letter-spacing: 0.02em; color: var(--color-muted); }
-.route-heading p { max-width: 760px; color: var(--color-body); font-size: 1.15rem; }
-.two-column { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, 0.75fr); gap: var(--space-2xl); }
+
 @media (max-width: 840px) {
   .shell { width: min(var(--shell), calc(100% - 28px)); }
-  .route-section { padding-block: var(--space-2xl); }
-  .route-heading, .two-column { grid-template-columns: 1fr; }
-  .route-heading { gap: var(--space-sm); }
 }
 @media (max-width: 520px) {
   .shell { width: calc(100% - 22px); }

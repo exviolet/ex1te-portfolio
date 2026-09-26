@@ -1,0 +1,104 @@
+---
+import { experience } from '../data/experience';
+
+/* One presentation of the experience data for the whole site. It used to be
+   two: the homepage rendered this timeline inline, and /about rendered
+   ExperienceBlock — same three stages, a different three-column table, a
+   different treatment of the same dates. Two grammars for one fact is exactly
+   what the internal routes were carrying over from before the redesign. */
+
+/* Stage periods are rendered as sortable stamps rather than prose dates. */
+const months: Record<string, string> = {
+  Январь: '01', Февраль: '02', Март: '03', Апрель: '04', Май: '05', Июнь: '06',
+  Июль: '07', Август: '08', Сентябрь: '09', Октябрь: '10', Ноябрь: '11', Декабрь: '12',
+};
+const stamp = (period: string) => {
+  const [month, year] = period.split(' ');
+  return months[month] && year ? `${year}/${months[month]}` : period;
+};
+
+/* The meta line claims the relationship runs to "настоящее время", but every
+   stamp below it is a start date, so the last one read as the last thing that
+   happened rather than the thing still happening — and nothing covered the
+   months since. Derived from the period rather than stored on the stage: when
+   the relationship gets an end date, the marker leaves with it. */
+const ongoing = experience.period.includes('настоящее время');
+const lastStage = experience.stages.length - 1;
+---
+
+{/* Metadata, not a lead paragraph: as a mono stamp the section opens dense,
+    which is what the board asks of experience. Prose openers belong to
+    sections that need explaining before they can be read. */}
+<p class="experience-meta">
+  {experience.company} <span class="sep">//</span> {experience.relationship} <span class="sep">//</span> {experience.period}
+</p>
+<ol class="timeline">
+  {experience.stages.map((stage, i) => (
+    <li>
+      <div class="timeline-stamp">
+        <span class="timeline-date">{stamp(stage.period)}</span>
+        {ongoing && i === lastStage && (
+          <span class="timeline-now"><span aria-hidden="true">//</span> сейчас</span>
+        )}
+      </div>
+      <div class="timeline-body">
+        <h3>{stage.title}</h3>
+        <p>{stage.detail}</p>
+      </div>
+    </li>
+  ))}
+</ol>
+
+<style>
+  .experience-meta {
+    margin: 1.1rem 0 1.5rem;
+    color: var(--color-muted);
+    font-family: var(--font-utility);
+    font-size: 0.76rem;
+    letter-spacing: 0.02em;
+  }
+  .experience-meta .sep { color: var(--color-accent); }
+
+  .timeline { list-style: none; border-top: 1px solid var(--color-line); }
+  .timeline > li {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0 1.5rem;
+    align-items: start;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .timeline-stamp {
+    display: grid;
+    gap: 0.3rem;
+    font-family: var(--font-utility);
+    font-size: 0.76rem;
+    font-variant-numeric: tabular-nums;
+  }
+  /* 1.9 optically centres the stamp against the 1.2rem title beside it. It sits
+     on the date rather than the column so the "сейчас" marker below is not
+     pushed out by the same leading. */
+  .timeline-date { color: var(--color-accent); line-height: 1.9; }
+  .timeline-now {
+    color: var(--color-muted);
+    font-size: 0.66rem;
+    letter-spacing: 0.09em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .timeline-now span { color: var(--color-accent); }
+
+  .timeline-body h3 {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .timeline-body p { max-width: 62ch; margin-top: 0.5rem; color: var(--color-body); font-size: 0.98rem; }
+
+  @media (max-width: 620px) {
+    .timeline > li { grid-template-columns: 1fr; gap: 0.35rem; }
+    .timeline-date { line-height: 1.4; }
+  }
+</style>

@@ -2,6 +2,9 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectPreview from '../../components/ProjectPreview.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import Icon from '../../components/Icon.astro';
+import { site } from '../../data/site';
 import '../../styles/routes/work.css';
 
 const work = (await getCollection('work', ({ data }) => data.published)).sort((a, b) => a.data.homepageOrder - b.data.homepageOrder);
@@ -11,11 +14,25 @@ const secondary = work.filter((entry) => entry.id !== featured.id);
 
 <BaseLayout title="Работы / Бакытжан Избасаров" description="Коммерческие и самостоятельные frontend-проекты Бакытжана Избасарова." routeClass="route-work">
   <main>
-    <header class="work-intro shell"><p class="utility">Work</p><h1>Работы</h1><p>Четыре проекта показывают разные стороны одной специализации: сложные интерфейсы, состояние, ограничения среды и поставку работающего продукта.</p></header>
-    <section class="work-list shell">
+    <header class="work-intro shell">
+      <p class="page-marker">[ Work ]</p>
+      <h1>Работы</h1>
+      <p class="work-lead">Четыре проекта показывают разные стороны одной специализации: сложные интерфейсы, состояние, ограничения среды и поставку работающего продукта.</p>
+    </header>
+
+    {/* "Index", not "Projects": the h1 already says Работы, and a section named
+        for its own page reads as a translation echo. The page is an index of
+        work, which is also what the document grammar calls itself. */}
+    <section class="work-list shell" aria-labelledby="work-index-title">
+      <SectionHead index="01" name="Index" id="work-index-title" />
       <div class="work-featured"><ProjectPreview entry={featured} mode="featured" eager={true} /></div>
       <div class="work-secondary">{secondary.map((entry) => <ProjectPreview entry={entry} mode="index" />)}</div>
     </section>
-    <section class="work-supporting"><div class="shell two-column"><h2>Другие материалы</h2><p>Тексты, эксперименты и менее формальные проекты находятся на отдельной <a href="https://ex1te.pages.dev/">Personal Platform</a>.</p></div></section>
+
+    <section class="work-supporting shell" aria-labelledby="work-elsewhere-title">
+      <SectionHead index="02" name="Elsewhere" id="work-elsewhere-title" />
+      <p class="work-elsewhere">Выше — только продуктовые кейсы. Эксперименты, мелкие инструменты и тексты о них лежат на личном сайте.</p>
+      <a class="pill" href={site.personalSite}>ex1te.pages.dev<Icon name="arrow-up-right" size={15} /></a>
+    </section>
   </main>
 </BaseLayout>

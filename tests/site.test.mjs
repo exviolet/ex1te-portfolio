@@ -58,11 +58,11 @@ test('case pages render content collection stories', async () => {
   const sendoff = await built('/work/sendoff');
   const tapytap = await built('/work/tapytap');
 
-  assert.match(steam, /Моя роль \/ граница ownership/);
+  assert.match(steam, /Моя роль \/ где проходит граница/);
   assert.match(steam, /одна аналитическая модель/i);
   assert.match(interactive, /Chrome 83/);
   assert.match(interactive, /Проект ещё не запущен в школах/);
-  assert.match(sendoff, /prompt-first/);
+  assert.match(sendoff, /запрос вместо строки ввода/);
   assert.match(sendoff, /v0\.2\.0/);
   assert.match(tapytap, /Expo SDK 54/);
   assert.match(tapytap, /In development/);
@@ -197,6 +197,56 @@ test('the open-ended experience period is anchored to a stage', async () => {
   assert.match(html, /Август 2025 — настоящее время/);
   assert.match(html, /timeline-now/);
   assert.match(html, /сейчас/);
+});
+
+test('internal routes carry the same grammar as the homepage', async () => {
+  // Before this pass they opened with a bare English word above the h1 and
+  // used `.route-heading` / `.two-column`, which the board rejects.
+  for (const [route, marker] of [['/work', 'Work'], ['/about', 'About'], ['/contact', 'Contact']]) {
+    const html = await built(route);
+    assert.match(html, new RegExp(`class="page-marker"[^>]*>\\[ ${marker} \\]`), `page marker on ${route}`);
+  }
+
+  const work = await built('/work');
+  const about = await built('/about');
+  for (const [index, name] of [['01', 'Index'], ['02', 'Elsewhere']]) {
+    assert.match(work, new RegExp(`SECTION\\s*<span[^>]*>//</span>\\s*${index}`), `work marker ${index}`);
+    assert.match(work, new RegExp(name), `work section ${name}`);
+  }
+  for (const [index, name] of [['01', 'Experience'], ['02', 'Stack'], ['03', 'Elsewhere']]) {
+    assert.match(about, new RegExp(`SECTION\\s*<span[^>]*>//</span>\\s*${index}`), `about marker ${index}`);
+    assert.match(about, new RegExp(name), `about section ${name}`);
+  }
+
+  // Case pages get the bracket form too, filled with the case's own context.
+  // The context is Russian like every other marker: this slot sits next to
+  // `[ Коммерческий продукт ]` on a neighbouring case, and an English phrase
+  // there made one slot speak two languages.
+  const sendoff = await built('/work/sendoff');
+  assert.match(sendoff, /class="page-marker"[^>]*>\[ Личный open-source-продукт \]/);
+});
+
+test('the removed layout primitives do not come back', async () => {
+  // `.route-section`, `.route-heading` and `.two-column` were deleted with the
+  // internal-route pass. Their markup is the rejected grammar, so a route that
+  // starts using them again is a regression, not a style choice.
+  for (const route of ['/', '/work', '/about', '/contact', '/work/sendoff']) {
+    const html = await built(route);
+    const body = html.slice(html.indexOf('<body'));
+    assert.doesNotMatch(body, /route-heading|two-column|route-section/, route);
+  }
+  const css = await builtCss();
+  assert.doesNotMatch(css, /\.route-heading|\.two-column/, 'primitives left in the stylesheet');
+});
+
+test('one experience timeline serves both routes that show it', async () => {
+  // /about used to render the same three stages as a different table.
+  const home = await built('/');
+  const about = await built('/about');
+  for (const [route, html] of [['/', home], ['/about', about]]) {
+    assert.match(html, /timeline-now/, `current stage marker on ${route}`);
+    assert.match(html, /2026\/03/, `stamp format on ${route}`);
+  }
 });
 
 test('the header wordmark is the person, not a category', async () => {
