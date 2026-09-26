@@ -1,0 +1,40 @@
+---
+import CaseFigure from './CaseFigure.astro';
+import type { CaseFigure as Figure } from '../data/workMedia';
+
+interface Props { html: string; figures?: Figure[]; slug: string; }
+const { html, figures = [], slug } = Astro.props;
+
+/* The case body stays a markdown file — it is the author's text, not a data
+   structure. To put evidence inside a section rather than in a gallery at the
+   end, the rendered HTML is cut at every `<h2 id="…">` and the figures that
+   name that heading are emitted after its prose. No MDX, no client script. */
+const sections = html
+  .split(/(?=<h2 id=")/)
+  .filter((chunk) => chunk.trim() !== '')
+  .map((chunk) => ({ id: chunk.match(/^<h2 id="([^"]+)"/)?.[1] ?? '', chunk }));
+
+const placed = new Set<string>();
+const blocks = sections.map((section) => {
+  const own = figures.filter((figure) => section.id.startsWith(figure.after));
+  own.forEach((figure) => placed.add(figure.after));
+  return { ...section, figures: own };
+});
+
+/* A figure whose heading was renamed would otherwise vanish without a word —
+   and a missing screenshot is invisible in a passing build. Fail instead. */
+const orphans = figures.filter((figure) => !placed.has(figure.after));
+if (orphans.length > 0) {
+  throw new Error(
+    `${slug}: нет заголовка для медиа ${orphans.map((figure) => `"${figure.after}"`).join(', ')}. ` +
+      `Есть: ${sections.map((section) => section.id).join(', ')}`,
+  );
+}
+---
+
+{blocks.map((block) => (
+  <div class="case-block">
+    <div class="prose" set:html={block.chunk} />
+    {block.figures.map((figure) => <CaseFigure figure={figure} />)}
+  </div>
+))}

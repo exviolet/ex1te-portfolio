@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
 import CaseLayout from '../../layouts/CaseLayout.astro';
 import CaseCaption from '../../components/CaseCaption.astro';
 import { workMedia } from '../../data/workMedia';
@@ -14,7 +14,6 @@ interface Props { entry: CollectionEntry<'work'>; }
 const { entry } = Astro.props;
 const slug = entry.id.replace(/\.md$/, '');
 const media = workMedia[slug];
-const { Content } = await render(entry);
 const captions: Record<string, string> = {
   'steam-kz': 'Пользовательская главная STEAM.KZ. Показаны синтетические тестовые данные на staging-копии.',
   interactivelab: 'Финальное видео с реальной METZ-панели появится после следующего прогона на железе.',
@@ -22,7 +21,6 @@ const captions: Record<string, string> = {
 };
 ---
 
-<CaseLayout entry={entry} media={media}>
+<CaseLayout entry={entry} media={media} slug={slug} html={entry.rendered?.html ?? ''}>
   <CaseCaption slot="caption" text={captions[slug]} />
-  <Content />
 </CaseLayout>

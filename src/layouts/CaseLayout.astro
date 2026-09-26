@@ -1,12 +1,13 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
-import Icon from '../components/Icon.astro';
 import ProjectMedia from '../components/ProjectMedia.astro';
+import CaseBody from '../components/CaseBody.astro';
+import Icon from '../components/Icon.astro';
 import '../styles/routes/case.css';
 import type { WorkMedia } from '../data/workMedia';
-interface Props { entry: CollectionEntry<'work'>; media: WorkMedia; }
-const { entry, media } = Astro.props;
+interface Props { entry: CollectionEntry<'work'>; media: WorkMedia; slug: string; html: string; }
+const { entry, media, slug, html } = Astro.props;
 const statusLabels = {
   production: 'Production',
   'pre-launch': 'Pre-launch',
@@ -35,6 +36,9 @@ const facts = [
           1px box around every block, and the stack table already solved this
           the same way: a 1px gap over a line-coloured background draws the
           dividers at any column count. */}
+      {/* Technologies used to sit in a sticky box in a 300px right column that
+          held nothing else for the length of the page. They belong here: they
+          are a fact of the project, like the role and the period. */}
       <dl class="case-facts">
         {facts.map((fact) => (
           <div>
@@ -42,24 +46,23 @@ const facts = [
             <dd>{fact.value}</dd>
           </div>
         ))}
+        <div class="case-facts-tech">
+          <dt><span aria-hidden="true">//</span> Технологии</dt>
+          <dd><ul>{entry.data.technologies.map((technology) => <li>{technology}</li>)}</ul></dd>
+        </div>
       </dl>
 
       <ProjectMedia media={media} eager={true} />
       <slot name="caption" />
     </header>
 
-    <section class="case-content shell">
-      <article class="prose"><slot /></article>
-      <aside class="case-aside">
-        <p class="case-aside-label"><span aria-hidden="true">//</span> Технологии</p>
-        <ul>{entry.data.technologies.map((technology) => <li>{technology}</li>)}</ul>
-        {media.document && <a class="pill" href={media.document}><Icon name="page" size={15} />Отчёт</a>}
-        {media.video && <a class="pill" href={media.video}><Icon name="media-video" size={15} />Видео</a>}
-      </aside>
-    </section>
+    <article class="case-content shell">
+      <CaseBody html={html} figures={media.figures} slug={slug} />
+    </article>
 
+    {/* No closing line here: the footer says "Расскажите про задачу" directly
+        below, and two calls in a row cancel each other out. Just the exits. */}
     <section class="case-next shell">
-      <p class="case-next-line">Посмотреть другие проекты или написать.</p>
       <div class="case-next-actions">
         <a class="pill" href="/work"><Icon name="arrow-left" size={15} />Все работы</a>
         <a class="pill pill-accent" href="/contact">Контакты<Icon name="arrow-right" size={15} /></a>

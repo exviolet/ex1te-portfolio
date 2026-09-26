@@ -29,6 +29,26 @@
   border-radius: var(--radius-surface);
   background: var(--color-line);
 }
+/* Technologies span the whole table as its bottom row. Same surface, same
+   dividers — one object stating the facts of the project, not a sidebar. */
+.case-facts-tech { grid-column: 1 / -1; }
+.case-facts-tech ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* Names like `mPDF / FPDI` contain a slash of their own, so the separator is a
+   thin rule rather than another glyph. It hangs off the right edge of the item
+   rather than the left of the next one: the row wraps to four lines at 390px,
+   and a leading rule would open every wrapped line with an orphan stroke. */
+.case-facts-tech li:not(:last-child) {
+  margin-right: 0.75rem;
+  border-right: 1px solid var(--color-line);
+  padding-right: 0.75rem;
+}
 .case-facts > div {
   display: flex;
   min-height: 5.25rem;
@@ -48,42 +68,44 @@
 .case-facts dt span { color: var(--color-accent); }
 .case-facts dd { margin: 0; color: var(--color-ink); font-size: 0.98rem; font-weight: 600; letter-spacing: -0.01em; }
 
-.case-content {
-  display: grid;
-  grid-template-columns: minmax(0, 780px) minmax(220px, 300px);
-  gap: var(--space-2xl);
-  padding-block: var(--space-3xl);
+/* One column, not prose plus a sidebar. The reading measure is held by the
+   prose itself; the figures step out to the full shell width, and that
+   alternation is what gives the body a rhythm instead of an even march. */
+.case-content { padding-block: var(--space-3xl); }
+.case-block + .case-block { margin-top: 3.5rem; }
+.case-block .prose > :first-child { margin-top: 0; }
+
+/* The results checklist was the only place on the site with bullet dots — the
+   most important block set in the cheapest form. It reads as rows on a
+   surface now, like every other list here. */
+.route-case .prose ul {
+  margin-top: 1.4rem;
+  padding-left: 0;
+  list-style: none;
 }
-.case-aside {
-  align-self: start;
-  position: sticky;
-  top: 5.5rem;
-  padding: 1.25rem;
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-surface);
-  background: var(--color-surface);
+.route-case .prose li {
+  position: relative;
+  padding: 0.62rem 0 0.62rem 1.7rem;
+  border-top: 1px solid var(--color-line);
 }
-.case-aside-label {
-  color: var(--color-muted);
+.route-case .prose li:last-child { border-bottom: 1px solid var(--color-line); }
+.route-case .prose li::before {
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
   font-family: var(--font-utility);
-  font-size: 0.66rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
+  font-size: 0.8rem;
+  content: '//';
 }
-.case-aside-label span { color: var(--color-accent); }
-.case-aside ul { margin: 0.9rem 0 1.3rem; list-style: none; color: var(--color-body); font-size: 0.95rem; line-height: 1.8; }
-.case-aside .pill { width: 100%; justify-content: center; margin-top: 0.5rem; }
 
 /* Closing block. It used to be an h2 the size of the case title with a line of
    prose beside it — a heading with nothing to head. The exit is two actions. */
 .case-next { padding-block: 0 var(--space-3xl); }
-.case-next-line { color: var(--color-muted); font-family: var(--font-utility); font-size: 0.76rem; }
-.case-next-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+.case-next-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
 
 @media (max-width: 820px) {
-  .case-content { grid-template-columns: 1fr; padding-block: var(--space-2xl); }
-  .case-aside { position: static; }
-  .case-aside .pill { width: auto; }
+  .case-content { padding-block: var(--space-2xl); }
+  .case-block + .case-block { margin-top: 2.6rem; }
 }
 @media (max-width: 560px) {
   .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
