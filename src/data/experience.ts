@@ -1,6 +1,6 @@
 export const experience = {
   company: 'STEAM.KZ',
-  period: 'Август 2025 — настоящее время',
+  period: 'Август 2025 — сентябрь 2026',
   relationship: 'Коммерческая проектная работа',
   stages: [
     {

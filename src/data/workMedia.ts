@@ -5,6 +5,11 @@ import steamAnalytics from '../assets/work/steam-kz/analytics.png';
 import steamCurator from '../assets/work/steam-kz/curator-school.png';
 import steamSchoolAdmin from '../assets/work/steam-kz/school-admin.png';
 import steamReport from '../assets/work/steam-kz/report.png';
+import steamWaReport from '../assets/work/steam-kz/whatsapp-report.jpg';
+import steamWaScoreList from '../assets/work/steam-kz/whatsapp-score-list.jpg';
+import steamWaScoreStop from '../assets/work/steam-kz/whatsapp-score-stop.jpg';
+import steamChallengeRejected from '../assets/work/steam-kz/challenge-rejected.png';
+import steamChallengePrize from '../assets/work/steam-kz/challenge-prize.png';
 import sendoffHero from '../assets/work/sendoff/handoff.webp';
 import sendoffTarget from '../assets/work/sendoff/target-picker.webp';
 import sendoffSlashMenu from '../assets/work/sendoff/slash-menu.webp';
@@ -56,10 +61,27 @@ export const workMedia: Record<string, WorkMedia> = {
         caption: 'Одна модель, разный охват: куратор выбирает школу, администратор школы уже в своей.',
       },
       {
-        after: 'решение-3',
+        after: 'решение-2',
         images: [{ src: steamReport, alt: 'Первая страница PDF-отчёта по школе на фирменном бланке' }],
         caption: 'Страница сгенерированного отчёта. Синтетические данные, настоящий бланк и вёрстка.',
         action: { label: 'Отчёт целиком', href: '/documents/steam-kz-report.pdf', icon: 'page' },
+      },
+      {
+        after: 'решение-2',
+        images: [
+          { src: steamWaReport, alt: 'Сообщение в WhatsApp с PDF-отчётом по школе за август и кнопкой «Оценить»' },
+          { src: steamWaScoreList, alt: 'Список оценок платформы от 0 до 5 в WhatsApp' },
+          { src: steamWaScoreStop, alt: 'Оценка 3, затем «стоп» и подтверждение отписки на казахском и русском' },
+        ],
+        caption: 'Пилот на проде: отчёт приходит в WhatsApp, оценка возвращается списком, «стоп» отписывает школу. Имя получателя скрыто.',
+      },
+      {
+        after: 'решение-3',
+        images: [
+          { src: steamChallengeRejected, alt: 'Кабинет учителя: прогресс 1 из 2, ролик отклонён с причиной «не является рилсом»' },
+          { src: steamChallengePrize, alt: 'Кабинет учителя: прогресс 2 из 2, оба ролика приняты, приз открыт' },
+        ],
+        caption: 'Кабинет учителя: ролик отклонён с причиной, затем возвращён в принятые — прогресс засчитан, приз открыт.',
       },
       {
         after: 'результат',
@@ -70,7 +92,7 @@ export const workMedia: Record<string, WorkMedia> = {
   },
   interactivelab: {
     heroAlt: 'InteractiveLAB на школьной Android-панели',
-    placeholder: 'Медиа с реальной METZ-панели появится после следующего прогона на железе.',
+    placeholder: 'Снимки с METZ-панели будут добавлены.',
   },
   tapytap: {
     heroAlt: 'TapyTap на Android',

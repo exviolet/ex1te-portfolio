@@ -61,7 +61,7 @@ test('case pages render content collection stories', async () => {
   assert.match(steam, /Моя роль \/ где проходит граница/);
   assert.match(steam, /одна аналитическая модель/i);
   assert.match(interactive, /Chrome 83/);
-  assert.match(interactive, /Проект ещё не запущен в школах/);
+  assert.match(interactive, /подписан и раздаётся школам/);
   assert.match(sendoff, /запрос вместо строки ввода/);
   assert.match(sendoff, /v0\.2\.0/);
   assert.match(tapytap, /Expo SDK 54/);
@@ -190,13 +190,16 @@ test('the homepage does not repeat the closing call above the footer', async () 
   assert.doesNotMatch(main, /SECTION\s*<span[^>]*>\/\/<\/span>\s*04/);
 });
 
-test('the open-ended experience period is anchored to a stage', async () => {
+test('the current-stage marker follows the experience period', async () => {
   const html = await built('/');
-  // "настоящее время" in the header is a claim about now; the timeline has to
-  // say which stage is still running, or the last stamp reads as the end.
-  assert.match(html, /Август 2025 — настоящее время/);
-  assert.match(html, /timeline-now/);
-  assert.match(html, /сейчас/);
+  // The marker is derived from the period, not stored on a stage. While the
+  // period read "настоящее время" it had to name the running stage; since the
+  // work ended in September 2026 the period is closed and the marker must go.
+  assert.match(html, /Август 2025 — сентябрь 2026/);
+  // Narrow on purpose: TapyTap's period in the project rail still reads
+  // "настоящее время", and the marker's rule lives in the inlined CSS.
+  assert.doesNotMatch(html, /Август 2025 — настоящее время/);
+  assert.doesNotMatch(html, /class="timeline-now/);
 });
 
 test('internal routes carry the same grammar as the homepage', async () => {
@@ -244,7 +247,6 @@ test('one experience timeline serves both routes that show it', async () => {
   const home = await built('/');
   const about = await built('/about');
   for (const [route, html] of [['/', home], ['/about', about]]) {
-    assert.match(html, /timeline-now/, `current stage marker on ${route}`);
     assert.match(html, /2026\/03/, `stamp format on ${route}`);
   }
 });
