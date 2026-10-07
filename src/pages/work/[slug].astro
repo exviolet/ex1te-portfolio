@@ -15,8 +15,8 @@ const { entry } = Astro.props;
 const slug = entry.id.replace(/\.md$/, '');
 const media = workMedia[slug];
 const captions: Record<string, string> = {
-  'steam-kz': 'Пользовательская главная STEAM.KZ. Показаны синтетические тестовые данные на staging-копии.',
-  interactivelab: 'Android 11, WebView Chrome 83, экран 4K при CSS-вьюпорте 1280×720.',
+  'steam-kz': 'Пользовательская главная STEAM.KZ.',
+  interactivelab: 'Панель METZ: Android 11, WebView Chrome 83, экран 4K при CSS-вьюпорте 1280×720. Над кнопками — подсказка скачать предметы заранее, чтобы на уроке не нужен был интернет. Каталог предметов тестовый.',
   sendoff: 'Реальная передача: запрос готовится в Sendoff и уходит в выбранный терминал.',
 };
 ---

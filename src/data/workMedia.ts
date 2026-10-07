@@ -10,6 +10,9 @@ import steamWaScoreList from '../assets/work/steam-kz/whatsapp-score-list.jpg';
 import steamWaScoreStop from '../assets/work/steam-kz/whatsapp-score-stop.jpg';
 import steamChallengeRejected from '../assets/work/steam-kz/challenge-rejected.png';
 import steamChallengePrize from '../assets/work/steam-kz/challenge-prize.png';
+import interactivelabHero from '../assets/work/interactivelab/panel-home-dark.jpg';
+import interactivelabLoginDark from '../assets/work/interactivelab/panel-login-dark.jpg';
+import interactivelabLoginLight from '../assets/work/interactivelab/panel-login-light.jpg';
 import sendoffHero from '../assets/work/sendoff/handoff.webp';
 import sendoffTarget from '../assets/work/sendoff/target-picker.webp';
 import sendoffSlashMenu from '../assets/work/sendoff/slash-menu.webp';
@@ -86,13 +89,23 @@ export const workMedia: Record<string, WorkMedia> = {
       {
         after: 'результат',
         video: '/video/steam-kz-analytics.mp4',
-        caption: 'Переход от месячной аналитики к карточке учителя и к годовой. Без звука, 20 секунд.',
+        caption: 'Переход от месячной аналитики к карточке учителя и к годовой.',
       },
     ],
   },
   interactivelab: {
-    heroAlt: 'InteractiveLAB на школьной Android-панели',
-    placeholder: 'Снимки с METZ-панели будут добавлены.',
+    hero: interactivelabHero,
+    heroAlt: 'Панель METZ с открытой главной InteractiveLAB: девять предметов и кнопка «Скачать всё»',
+    figures: [
+      {
+        after: 'результат',
+        images: [
+          { src: interactivelabLoginDark, alt: 'Экран входа InteractiveLAB на панели в тёмной теме' },
+          { src: interactivelabLoginLight, alt: 'Тот же экран входа в светлой теме' },
+        ],
+        caption: 'Вход на панели в тёмной и светлой теме. Язык переключается там же: ҚАЗ или РУС.',
+      },
+    ],
   },
   tapytap: {
     heroAlt: 'TapyTap на Android',
@@ -115,7 +128,7 @@ export const workMedia: Record<string, WorkMedia> = {
       {
         after: 'результат',
         video: '/video/sendoff-handoff.mp4',
-        caption: 'Черновик, Ctrl+Enter, один блок уходит в привязанный терминал. Без звука, 24 секунды.',
+        caption: 'Черновик, Ctrl+Enter, один блок уходит в привязанный терминал.',
       },
     ],
   },
