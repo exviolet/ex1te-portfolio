@@ -5,6 +5,7 @@ context: Личный open-source-продукт
 status: released
 role: Product Engineer
 team: Соло
+url: https://sendoff-editor.pages.dev/
 period: Март 2026
 featured: false
 homepageOrder: 3
@@ -50,4 +51,4 @@ Sendoff не запускает модели и не строит пайплай
 
 ## Ограничения
 
-Сборок под Windows и macOS нет, автообновления тоже. Два пользователя не означают подтверждённого спроса. Новый лендинг и медиа лежат на локальной ветке и ещё не выложены.
+Сборок под Windows и macOS нет, автообновления тоже. Два пользователя не означают подтверждённого спроса.

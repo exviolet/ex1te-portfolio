@@ -49,7 +49,7 @@ test('work, about, and contact have distinct responsibilities', async () => {
   assert.match(about, /React Native \+ Expo/);
   assert.match(about, /Docker \+ Docker Compose/);
   assert.match(contact, /Открыт к frontend-позициям/);
-  assert.match(contact, /Файл резюме — placeholder/);
+  assert.match(contact, /href="mailto:bakytzhan\.izbassarov@gmail\.com"/);
 });
 
 test('case pages render content collection stories', async () => {
@@ -84,7 +84,7 @@ test('the site never becomes a React SPA', async () => {
   assert.equal(all['react-dom'], undefined);
 });
 
-test('CV placeholder is a real PDF file', async () => {
+test('CV is a real PDF file', async () => {
   const pdf = await readFile(path.join(root, 'public/cv.pdf'));
   assert.equal(pdf.subarray(0, 4).toString('ascii'), '%PDF');
   assert.ok(pdf.length > 1024);

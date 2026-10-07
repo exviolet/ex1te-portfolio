@@ -31,6 +31,13 @@ const facts = [
       <p class="page-marker">[ {entry.data.context} ]</p>
       <h1>{entry.data.title}</h1>
       <p class="case-summary">{entry.data.summary}</p>
+      {/* Diagonal arrow, as in the footer: the link leaves the site. The label
+          is the bare host, so the reader sees where it goes before clicking. */}
+      {entry.data.url && (
+        <a class="pill case-site" href={entry.data.url}>
+          {new URL(entry.data.url).host}<Icon name="arrow-up-right" size={15} />
+        </a>
+      )}
 
       {/* One surface with hairline dividers, not four boxes. The board bans a
           1px box around every block, and the stack table already solved this

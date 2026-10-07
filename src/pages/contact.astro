@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactLinks from '../components/ContactLinks.astro';
 import { site } from '../data/site';
-import { contact } from '../data/contact';
 import '../styles/routes/contact.css';
 ---
 
@@ -19,7 +18,6 @@ import '../styles/routes/contact.css';
       <div class="contact-details">
         <p class="contact-formats">{site.availability} <span>//</span> {site.workFormats}</p>
         <ContactLinks />
-        <p class="contact-note">{contact.note}</p>
       </div>
     </div>
   </main>

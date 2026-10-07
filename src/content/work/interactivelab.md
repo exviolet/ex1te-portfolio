@@ -5,6 +5,7 @@ context: Коммерческий продукт
 status: production
 role: Client frontend owner
 team: Два разработчика
+url: https://interactivelab.kz/
 period: Июль — сентябрь 2026
 featured: false
 homepageOrder: 2

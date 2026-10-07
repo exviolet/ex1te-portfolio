@@ -12,6 +12,7 @@ const work = defineCollection({
     role: z.string(),
     team: z.string(),
     period: z.string(),
+    url: z.string().url().optional(),
     featured: z.boolean().default(false),
     homepageOrder: z.number().int().positive(),
     technologies: z.array(z.string()).default([]),

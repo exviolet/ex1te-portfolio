@@ -14,7 +14,6 @@
   letter-spacing: 0.02em;
 }
 .contact-formats span { color: var(--color-accent); }
-.contact-note { margin-top: 1.6rem; color: var(--color-muted); font-family: var(--font-utility); font-size: 0.7rem; }
 
 @media (max-width: 760px) {
   .contact-page { align-items: start; min-height: 0; }

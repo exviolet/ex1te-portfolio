@@ -12,11 +12,11 @@ const menu = [
   { href: '/contact', label: 'Контакты' },
 ];
 
-/* Every entry resolves to a real account. Email is not here on purpose — see
-   the note in src/data/contact.ts. */
+/* Every entry resolves to a real account. */
 const socials = [
   { href: contact.github, label: 'GitHub', icon: 'github' },
   { href: contact.telegram, label: 'Telegram', icon: 'telegram' },
+  { href: `mailto:${contact.email}`, label: 'Email', icon: 'mail' },
   { href: contact.instagram, label: 'Instagram', icon: 'instagram' },
 ];
 ---

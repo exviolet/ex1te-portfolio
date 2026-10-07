@@ -18,7 +18,7 @@ bun run dev                       # astro dev
 bun run verify                    # astro check + astro build + node --test (основной гейт)
 bun run test                      # только тесты; ТРЕБУЕТ свежий dist/ — сначала bun run build
 node --test tests/site.test.mjs   # один файл тестов
-node --test --test-name-pattern 'CV placeholder' tests/*.test.mjs   # один тест
+node --test --test-name-pattern 'CV is a real PDF' tests/*.test.mjs   # один тест
 ```
 
 Тесты работают не с dev-сервером, а с собранными файлами в `dist/`: они читают `dist/<route>/index.html` и проверяют наличие конкретных русских строк. Поэтому после правки контента или разметки прогоняй `bun run verify`, а не `bun run test` в одиночку.
@@ -33,7 +33,7 @@ Astro 7, `output: 'static'`, `trailingSlash: 'never'`, TypeScript strict. `clien
 
 1. `src/content/work/*.md` — case studies. Схема в `src/content.config.ts` (glob loader + zod). Обязательные поля: `title`, `summary`, `context`, `status` (`production|pre-launch|released`), `role`, `team`, `period`, `homepageOrder`, плюс `featured`/`technologies`/`published`. Порядок на `/` и `/work` задаётся `homepageOrder`, а не файловой системой; `published: false` убирает кейс из обоих индексов и из `getStaticPaths`.
 2. `src/data/*.ts` — типизированные `as const` модули для не-кейсового контента: `site.ts` (identity/availability), `experience.ts`, `skills.ts`, `contact.ts`. Текст правится здесь, не в разметке страниц.
-3. `src/data/workMedia.ts` — мост между кейсами и медиа. Ключ — slug кейса; изображения импортируются как `ImageMetadata` для `astro:assets`, а видео/PDF ссылаются на `public/` строками. У кейса может не быть hero — тогда задаётся `placeholder`, и `ProjectMedia.astro` рендерит текстовую заглушку (так сейчас живёт `interactivelab`). Кроме hero там лежат `figures` — доказательства, привязанные к секциям тела кейса (см. ниже). Что каким скриншотом доказывается, решают evidence packs вне репозитория: `/home/ex1te/Pictures/portfolio-capture/<slug>/selected/SELECTION.md` — там же privacy gate и правила вроде «куратора и администратора школы показывать парой».
+3. `src/data/workMedia.ts` — мост между кейсами и медиа. Ключ — slug кейса; изображения импортируются как `ImageMetadata` для `astro:assets`, а видео/PDF ссылаются на `public/` строками. У кейса может не быть hero — тогда задаётся `placeholder`, и `ProjectMedia.astro` рендерит текстовую заглушку (так сейчас живёт `tapytap`). Кроме hero там лежат `figures` — доказательства, привязанные к секциям тела кейса (см. ниже). Что каким скриншотом доказывается, решают evidence packs вне репозитория: `/home/ex1te/Pictures/portfolio-capture/<slug>/selected/SELECTION.md` — там же privacy gate и правила вроде «куратора и администратора школы показывать парой».
 
 Slug кейса везде выводится как `entry.id.replace(/\.md$/, '')` — эта же строка служит ключом в `workMedia` и в мапе подписей внутри `src/pages/work/[slug].astro`. Добавляя кейс, обнови обе мапы, иначе `media` будет `undefined`.
 
@@ -51,7 +51,7 @@ Slug кейса везде выводится как `entry.id.replace(/\.md$/, 
 
 ## Контент и приватность
 
-Русский — основной язык v1. Утверждения в кейсах должны быть подтверждаемыми; STEAM.KZ-скриншоты сделаны на синтетических staging-данных, InteractiveLAB явно помечен как pre-launch. Контакты в `src/data/contact.ts` настоящие (Telegram, GitHub, Instagram); email там намеренно отсутствует, пока нет реального адреса. Placeholder остался один — `public/cv.pdf` (тест проверяет только что это валидный PDF > 1KB).
+Русский — основной язык v1. Утверждения в кейсах должны быть подтверждаемыми; STEAM.KZ-скриншоты сделаны на синтетических staging-данных, на hero InteractiveLAB тестовый каталог предметов, и подпись это говорит. Все контакты в `src/data/contact.ts` настоящие: Telegram, email, GitHub, Instagram. `public/cv.pdf` собирается Typst из `cv.typ` и руками сверяется с цифрами кейсов, автоматической синхронизации нет.
 
 ## Дизайн-направление
 
