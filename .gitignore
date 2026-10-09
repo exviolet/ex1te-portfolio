@@ -3,3 +3,9 @@ dist/
 .astro/
 .DS_Store
 *.log
+
+# Session state for local agents: lives on disk, not in the public repo.
+HANDOFF.md
+
+.env
+.env.*

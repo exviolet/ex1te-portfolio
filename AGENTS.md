@@ -6,7 +6,7 @@ Employer-facing frontend portfolio. It is separate from `ex1te.pages.dev` and mu
 
 ## Session state
 
-`HANDOFF.md` carries what this contract deliberately does not: what was finished in the last session, what is open, and what was decided against and why. Read it before starting work, and update it at the end of a session. It is committed, so it travels with the repo.
+`HANDOFF.md` carries what this contract deliberately does not: what was finished in the last session, what is open, and what was decided against and why. Read it before starting work, and update it at the end of a session. It is git-ignored: the repo is public and the file holds the employer's internal data, so it lives only on this machine and never travels with the repo.
 
 ## Stack boundaries
 
