@@ -64,7 +64,7 @@ test('case pages render content collection stories', async () => {
   assert.match(interactive, /подписан и раздаётся школам/);
   assert.match(sendoff, /запрос вместо строки ввода/);
   assert.match(sendoff, /v0\.2\.0/);
-  assert.match(tapytap, /Expo SDK 54/);
+  assert.match(tapytap, /Expo SDK 57/);
   assert.match(tapytap, /In development/);
 });
 

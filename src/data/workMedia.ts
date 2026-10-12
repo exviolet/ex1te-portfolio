@@ -13,6 +13,13 @@ import steamChallengePrize from '../assets/work/steam-kz/challenge-prize.png';
 import interactivelabHero from '../assets/work/interactivelab/panel-home-dark.jpg';
 import interactivelabLoginDark from '../assets/work/interactivelab/panel-login-dark.jpg';
 import interactivelabLoginLight from '../assets/work/interactivelab/panel-login-light.jpg';
+import tapytapHero from '../assets/work/tapytap/home-light.jpg';
+import tapytapEditTop from '../assets/work/tapytap/edit-top-light.jpg';
+import tapytapEditReminders from '../assets/work/tapytap/edit-reminders-light.jpg';
+import tapytapCalendar from '../assets/work/tapytap/calendar-dark.jpg';
+import tapytapStats from '../assets/work/tapytap/stats-dark.jpg';
+import tapytapHabitStats from '../assets/work/tapytap/habit-stats-dark.jpg';
+import tapytapJournal from '../assets/work/tapytap/journal-dark.jpg';
 import sendoffHero from '../assets/work/sendoff/handoff.webp';
 import sendoffTarget from '../assets/work/sendoff/target-picker.webp';
 import sendoffSlashMenu from '../assets/work/sendoff/slash-menu.webp';
@@ -108,8 +115,28 @@ export const workMedia: Record<string, WorkMedia> = {
     ],
   },
   tapytap: {
-    heroAlt: 'TapyTap на Android',
-    placeholder: 'Скриншоты приложения будут добавлены после утверждения кейса.',
+    hero: tapytapHero,
+    heroAlt: 'Главный экран TapyTap на iPhone: список привычек с категориями, сериями и отметками за день',
+    figures: [
+      {
+        after: 'решение-1',
+        images: [
+          { src: tapytapEditTop, alt: 'Редактирование количественной привычки «Бегать утром»: тип, описание, цель серии, единица измерения' },
+          { src: tapytapEditReminders, alt: 'Нижняя часть той же формы: категории и напоминание в 09:20 по понедельникам, средам и пятницам' },
+        ],
+        caption: 'Редактирование привычки после перехода на один стор. Напоминание, заданное при создании, на месте; раньше этот экран сохранял пустой список.',
+      },
+      {
+        after: 'результат',
+        images: [
+          { src: tapytapCalendar, alt: 'Календарь привычки «Бегать утром» за октябрь 2026 и тепловая карта за полгода' },
+          { src: tapytapStats, alt: 'Экран статистики: карта активности, продуктивность за неделю и месяц, список привычек с сериями' },
+          { src: tapytapHabitStats, alt: 'Статистика одной привычки: текущая серия, всего выполнено, прогресс за две недели' },
+          { src: tapytapJournal, alt: 'Журнал заметок, сгруппированных по месяцам и привязанных к привычкам' },
+        ],
+        caption: 'Календарь, статистика и журнал в тёмной теме, данные тестового аккаунта.',
+      },
+    ],
   },
   sendoff: {
     hero: sendoffHero,

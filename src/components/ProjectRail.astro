@@ -48,7 +48,7 @@ const items = entries.map((entry) => {
   <div class="panels">
     {items.map((item) => (
       <article class="panel" data-panel>
-        <div class="panel-media">
+        <div class:list={['panel-media', { portrait: item.media?.hero && item.media.hero.height > item.media.hero.width }]}>
           {item.media?.hero
             ? <Image src={item.media.hero} alt={item.media.heroAlt} loading="lazy" />
             : <p class="panel-placeholder">{item.media?.placeholder}</p>}
@@ -162,6 +162,9 @@ const items = entries.map((entry) => {
 
   .panel-media { min-height: 400px; background: var(--color-raised); }
   .panel-media img { width: 100%; height: 100%; min-height: 400px; object-fit: cover; object-position: top left; }
+  /* Same rule as ProjectMedia: a phone screenshot stands whole, not cropped. */
+  .panel-media.portrait { display: grid; place-items: center; padding: 1.5rem; }
+  .panel-media.portrait img { width: auto; max-width: 100%; height: auto; min-height: 0; max-height: 460px; border-radius: 1.2rem; }
   .panel-placeholder {
     display: grid;
     place-items: center;
@@ -231,6 +234,7 @@ const items = entries.map((entry) => {
     .panel { grid-template-columns: 1fr; }
     .panel-copy { border-left: 0; border-top: 1px solid var(--color-line); }
     .panel-media, .panel-media img { min-height: 240px; }
+    .panel-media.portrait img { min-height: 0; max-height: 380px; }
   }
   @media (max-width: 520px) {
     .panel-copy { padding: 1.15rem; }
