@@ -55,7 +55,7 @@
 #text(fill: muted)[
   #if phone != none [#link("tel:" + phone.replace(" ", ""))[#phone] ·]
   #link("mailto:bakytzhan.izbassarov@gmail.com")[bakytzhan.izbassarov\@gmail.com] ·
-  #link("https://ex1te.pages.dev")[ex1te.pages.dev] ·
+  #link("https://bakytzhan.pages.dev")[bakytzhan.pages.dev] ·
   #link("https://github.com/exviolet")[github.com/exviolet] ·
   #link("https://t.me/ex1te0")[t.me/ex1te0]
 ]
@@ -66,7 +66,7 @@
 Год коммерческой работы над продуктовыми интерфейсами на React и TypeScript:
 ролевые кабинеты, аналитика, отчёты, офлайн-клиент для Android. Довожу задачу
 до релиза — в том числе серверную часть на PHP, когда она нужна фиче.
-Портфолио с разбором кейсов — на #link("https://ex1te.pages.dev")[ex1te.pages.dev].
+Портфолио с разбором кейсов — на #link("https://bakytzhan.pages.dev")[bakytzhan.pages.dev].
 
 // ── Опыт ────────────────────────────────────────────────
 

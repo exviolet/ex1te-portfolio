@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+---
+
+{/* Without a 404.html, Cloudflare Pages treats the site as an SPA and answers
+    every unknown path with the homepage and a 200. One line and the way out. */}
+<BaseLayout title={`Страница не найдена / ${site.name}`} description="Такой страницы на сайте нет." routeClass="route-404">
+  <main class="not-found shell">
+    <p class="page-marker">[ 404 ]</p>
+    <h1>Такой страницы нет</h1>
+    <div class="not-found-actions">
+      <a class="pill" href="/"><Icon name="arrow-left" size={15} />На главную</a>
+      <a class="pill" href="/work">Работы<Icon name="arrow-right" size={15} /></a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found { min-height: calc(100vh - 220px); padding-block: var(--space-3xl); }
+  .not-found h1 { margin-bottom: 1.6rem; }
+  .not-found-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+</style>

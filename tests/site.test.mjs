@@ -15,7 +15,8 @@ async function builtCss() {
 }
 
 async function built(route) {
-  const relative = route === '/' ? 'index.html' : path.join(route.replace(/^\//, ''), 'index.html');
+  // build.format 'file': /work/tapytap is dist/work/tapytap.html.
+  const relative = route === '/' ? 'index.html' : `${route.replace(/^\//, '')}.html`;
   return readFile(path.join(dist, relative), 'utf8');
 }
 
