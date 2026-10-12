@@ -9,3 +9,6 @@ HANDOFF.md
 
 .env
 .env.*
+
+# Python venv for scripts/og-cards.py
+.venv-og/

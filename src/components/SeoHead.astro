@@ -1,6 +1,8 @@
 ---
-interface Props { title: string; description: string; }
-const { title, description } = Astro.props;
+/* `image` is a card from public/og/, made by scripts/og-cards.py: one per case,
+   the site card everywhere else. */
+interface Props { title: string; description: string; image?: string; }
+const { title, description, image = '/og/home.png' } = Astro.props;
 /* With build.format 'file' the build sees `/work.html` and `/index.html`;
    the served URLs are `/work` and `/`. The 404 page has no canonical at all. */
 const pathname = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/');
@@ -19,5 +21,11 @@ const canonical = pathname === '/404' ? undefined : new URL(pathname, Astro.site
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:site_name" content="Бакытжан Избасаров" />
+<meta property="og:locale" content="ru_RU" />
+<meta property="og:image" content={new URL(image, Astro.site)} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="generator" content={Astro.generator} />

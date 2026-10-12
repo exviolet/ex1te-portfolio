@@ -43,6 +43,8 @@ import Icon from './Icon.astro';
 
   function apply(theme: 'dark' | 'light') {
     document.documentElement.dataset.theme = theme;
+    const bar = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (bar) bar.content = bar.dataset[theme] ?? bar.content;
     const next = theme === 'light' ? 'тёмную' : 'светлую';
     toggle?.setAttribute('aria-label', `Переключить на ${next} тему`);
   }

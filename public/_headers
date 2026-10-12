@@ -1,0 +1,12 @@
+# Cloudflare Pages response headers.
+
+# Astro fingerprints everything under /_astro (screenshots, CSS, JS): a new
+# build means a new file name, so the old one can be cached for good.
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
