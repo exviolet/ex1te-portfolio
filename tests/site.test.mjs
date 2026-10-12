@@ -291,3 +291,9 @@ test('every published case has its own link-preview card', async () => {
   assert.match(await built('/'), /<meta property="og:image" content="https:\/\/bakytzhan\.pages\.dev\/og\/home\.png">/);
 });
 
+test('the header marks the current section on every route', async () => {
+  for (const [route, label] of [['/work', 'Работы'], ['/work/tapytap', 'Работы'], ['/about', 'Обо мне'], ['/contact', 'Контакты']]) {
+    assert.match(await built(route), new RegExp(`aria-current="page"[^>]*>${label}<`), route);
+  }
+});
+

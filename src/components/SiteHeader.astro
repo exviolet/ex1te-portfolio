@@ -2,7 +2,9 @@
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { contact } from '../data/contact';
-const path = Astro.url.pathname;
+// build.format 'file': the build sees `/about.html`, the visitor `/about`.
+// SeoHead strips the suffix the same way for the canonical URL.
+const path = Astro.url.pathname.replace(/\.html$/, '');
 const links = [
   { href: '/work', label: 'Работы' },
   { href: '/about', label: 'Обо мне' },
