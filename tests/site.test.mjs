@@ -272,3 +272,10 @@ test('motion is an enhancement, never a prerequisite for reading the page', asyn
   assert.match(css, /html\[data-motion=["']?ready["']?\][^{]*\{opacity:0\}/);
   assert.doesNotMatch(css, /^\s*\[data-reveal\][^{]*\{opacity:0\}/m, 'ungated reveal rule');
 });
+
+test('canonical URLs match the served paths, without .html', async () => {
+  assert.match(await built('/'), /<link rel="canonical" href="https:\/\/bakytzhan\.pages\.dev\/">/);
+  assert.match(await built('/work'), /<link rel="canonical" href="https:\/\/bakytzhan\.pages\.dev\/work">/);
+  assert.match(await built('/work/tapytap'), /<link rel="canonical" href="https:\/\/bakytzhan\.pages\.dev\/work\/tapytap">/);
+  assert.doesNotMatch(await built('/404'), /rel="canonical"/);
+});

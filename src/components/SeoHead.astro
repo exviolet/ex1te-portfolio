@@ -1,18 +1,21 @@
 ---
 interface Props { title: string; description: string; }
 const { title, description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+/* With build.format 'file' the build sees `/work.html` and `/index.html`;
+   the served URLs are `/work` and `/`. The 404 page has no canonical at all. */
+const pathname = Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/');
+const canonical = pathname === '/404' ? undefined : new URL(pathname, Astro.site);
 ---
 
 <title>{title}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical} />
+{canonical && <link rel="canonical" href={canonical} />}
 {/* [BI] in JetBrains Mono, drawn from the font's own glyphs so it needs no
     web font. The .ico is for whatever still asks for /favicon.ico. */}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<meta property="og:url" content={canonical} />
+{canonical && <meta property="og:url" content={canonical} />}
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:type" content="website" />
