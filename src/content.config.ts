@@ -15,7 +15,12 @@ const work = defineCollection({
     url: z.string().url().optional(),
     featured: z.boolean().default(false),
     homepageOrder: z.number().int().positive(),
-    technologies: z.array(z.string()).default([]),
+    /* Grouped by the job each technology does in this project. At most four
+       groups: they sit as cells in the four-column facts table. */
+    technologies: z
+      .array(z.object({ group: z.string(), items: z.array(z.string()).min(1) }))
+      .max(4)
+      .default([]),
     published: z.boolean().default(true),
   }),
 });

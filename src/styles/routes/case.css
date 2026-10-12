@@ -30,26 +30,13 @@
   border-radius: var(--radius-surface);
   background: var(--color-line);
 }
-/* Technologies span the whole table as its bottom row. Same surface, same
-   dividers — one object stating the facts of the project, not a sidebar. */
-.case-facts-tech { grid-column: 1 / -1; }
-.case-facts-tech ul {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-/* Names like `mPDF / FPDI` contain a slash of their own, so the separator is a
-   thin rule rather than another glyph. It hangs off the right edge of the item
-   rather than the left of the next one: the row wraps to four lines at 390px,
-   and a leading rule would open every wrapped line with an orphan stroke. */
-.case-facts-tech li:not(:last-child) {
-  margin-right: 0.75rem;
-  border-right: 1px solid var(--color-line);
-  padding-right: 0.75rem;
-}
+/* Technology groups are cells of the same table, one per group. The last one
+   takes the columns the others leave (`--span`, set in CaseLayout), so three
+   groups still close the row flush. Names stack one per line: a group is a
+   short column, not a sentence. */
+.case-facts-tech { grid-column: span var(--span, 1); }
+.case-facts .case-facts-tech { justify-content: flex-start; }
+.case-facts-tech ul { display: grid; gap: 0.2rem; margin: 0; padding: 0; list-style: none; }
 .case-facts > div {
   display: flex;
   min-height: 5.25rem;
@@ -110,5 +97,9 @@
 }
 @media (max-width: 560px) {
   .case-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Two columns: an odd count of groups leaves the last one alone in its row,
+     so it takes the full width; an even count fills both columns. */
+  .case-facts-tech { grid-column: span 1; }
+  .case-facts-tech:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .case-summary { font-size: 1.1rem; }
 }

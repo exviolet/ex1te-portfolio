@@ -10,12 +10,18 @@ period: Март 2026
 featured: false
 homepageOrder: 3
 technologies:
-  - React
-  - TypeScript
-  - Zustand
-  - IndexedDB
-  - Tauri 2
-  - Rust
+  - group: Интерфейс
+    items:
+      - React
+      - TypeScript
+      - Zustand
+  - group: Хранение
+    items:
+      - IndexedDB
+  - group: Десктоп
+    items:
+      - Tauri 2
+      - Rust
 published: true
 ---
 

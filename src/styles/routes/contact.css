@@ -13,7 +13,6 @@
   font-size: 0.76rem;
   letter-spacing: 0.02em;
 }
-.contact-formats span { color: var(--color-accent); }
 
 @media (max-width: 760px) {
   .contact-page { align-items: start; min-height: 0; }

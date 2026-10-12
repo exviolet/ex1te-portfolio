@@ -1,0 +1,89 @@
+---
+import Icon from './Icon.astro';
+---
+
+{/* Full-screen view for case screenshots. Every zoomable image is already a
+    link to its full-size file, so without JavaScript the click opens the image
+    on its own — this only keeps the reader on the page. One dialog per case,
+    filled on click: native <dialog> brings Esc, the focus trap and focus
+    return with it. */}
+<dialog class="lightbox" data-lightbox aria-label="Снимок целиком" tabindex="-1">
+  <img alt="" />
+  <button class="lightbox-close" type="button" aria-label="Закрыть"><Icon name="xmark" size={20} /></button>
+</dialog>
+
+<style>
+  .lightbox {
+    width: 100vw;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: clamp(1rem, 3vw, 2.5rem);
+    border: 0;
+    background: transparent;
+    cursor: zoom-out;
+  }
+  .lightbox[open] { display: grid; place-items: center; }
+  .lightbox:focus { outline: none; }
+  .lightbox::backdrop { background: var(--color-bg); }
+
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: var(--radius-surface);
+    object-fit: contain;
+  }
+
+  .lightbox-close {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background: var(--color-surface);
+    color: var(--color-ink);
+    cursor: pointer;
+  }
+  .lightbox-close:hover { border-color: var(--color-line-strong); background: var(--color-raised); }
+
+  /* On a phone the image fills the width, so it starts below the button
+     rather than under it. */
+  @media (max-width: 620px) { .lightbox { padding-top: 4.5rem; } }
+
+  /* Fades in, closes at once: the reader asked to leave. */
+  @media (prefers-reduced-motion: no-preference) {
+    .lightbox[open],
+    .lightbox[open]::backdrop { transition: opacity var(--dur-base) var(--ease-signature); }
+    @starting-style {
+      .lightbox[open],
+      .lightbox[open]::backdrop { opacity: 0; }
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-lightbox]');
+  const image = dialog?.querySelector('img');
+
+  if (dialog && image) {
+    document.addEventListener('click', (event) => {
+      const link = (event.target as Element).closest<HTMLAnchorElement>('a[data-zoom]');
+      // A modified click still means "open in a new tab"; leave it alone.
+      if (!link || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      image.src = link.href;
+      image.alt = link.querySelector('img')?.alt ?? '';
+      dialog.showModal();
+      // showModal() focuses the close button, and a tap would leave a focus
+      // ring on it. The dialog takes focus instead; Tab still reaches the button.
+      dialog.focus();
+    });
+    // Any click closes it, on the image too: there is nothing inside to use.
+    dialog.addEventListener('click', () => dialog.close());
+  }
+</script>

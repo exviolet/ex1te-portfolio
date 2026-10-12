@@ -9,12 +9,18 @@ period: 2025 — настоящее время
 featured: false
 homepageOrder: 4
 technologies:
-  - React Native
-  - Expo SDK 57
-  - TypeScript
-  - Zustand
-  - Supabase
-  - Reanimated
+  - group: Приложение
+    items:
+      - React Native
+      - Expo SDK 57
+      - TypeScript
+      - Reanimated
+  - group: Состояние
+    items:
+      - Zustand
+  - group: Бэкенд
+    items:
+      - Supabase
 published: true
 ---
 

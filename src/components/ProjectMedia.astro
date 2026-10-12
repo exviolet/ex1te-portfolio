@@ -1,8 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import type { WorkMedia } from '../data/workMedia';
-interface Props { media: WorkMedia; compact?: boolean; eager?: boolean; }
-const { media, compact = false, eager = false } = Astro.props;
+/* `zoom` only on the case page, where Lightbox is mounted. In the previews
+   the whole card already links to the case. */
+interface Props { media: WorkMedia; compact?: boolean; eager?: boolean; zoom?: boolean; }
+const { media, compact = false, eager = false, zoom = false } = Astro.props;
 /* A phone screenshot is taller than it is wide. Stretched to the frame's
    width like a desktop shot, it ran two to three thousand pixels tall, so it
    stands whole and centred on the surface instead. */
@@ -10,13 +12,18 @@ const portrait = media.hero ? media.hero.height > media.hero.width : false;
 ---
 
 <div class:list={['project-media', { compact, portrait, placeholder: !media.hero }]}>
-  {media.hero ? <Image src={media.hero} alt={media.heroAlt} loading={eager ? 'eager' : 'lazy'} /> : <p>{media.placeholder}</p>}
+  {media.hero
+    ? zoom
+      ? <a class="zoom" href={media.hero.src} data-zoom><Image src={media.hero} alt={media.heroAlt} loading={eager ? 'eager' : 'lazy'} /></a>
+      : <Image src={media.hero} alt={media.heroAlt} loading={eager ? 'eager' : 'lazy'} />
+    : <p>{media.placeholder}</p>}
 </div>
 
 <style>
   .project-media { min-height: 410px; overflow: hidden; background: var(--color-raised); }
   .project-media img { width: 100%; height: 100%; min-height: 410px; object-fit: cover; object-position: top left; }
   .project-media.compact, .project-media.compact img { min-height: 260px; }
+  .zoom { display: block; max-width: 100%; cursor: zoom-in; }
   .project-media.portrait { display: grid; place-items: center; padding: 1.5rem; }
   .project-media.portrait img { width: auto; max-width: 100%; height: auto; min-height: 0; max-height: 560px; border-radius: 1.4rem; }
   .project-media.compact.portrait { padding: 1rem; }

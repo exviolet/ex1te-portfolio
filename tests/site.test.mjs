@@ -48,7 +48,7 @@ test('work, about, and contact have distinct responsibilities', async () => {
   assert.match(about, /Одно сотрудничество с постепенным переходом/);
   assert.match(about, /React Native \+ Expo/);
   assert.match(about, /Docker \+ Docker Compose/);
-  assert.match(contact, /Открыт к frontend-позициям/);
+  assert.match(contact, /Ищу постоянную frontend-позицию и беру проекты на фрилансе/);
   assert.match(contact, /href="mailto:bakytzhan\.izbassarov@gmail\.com"/);
 });
 

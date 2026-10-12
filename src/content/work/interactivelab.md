@@ -10,13 +10,21 @@ period: Июль — сентябрь 2026
 featured: false
 homepageOrder: 2
 technologies:
-  - React
-  - TypeScript
-  - Vite
-  - Capacitor 7
-  - IndexedDB
-  - Android
-  - Vitest
+  - group: Интерфейс
+    items:
+      - React
+      - TypeScript
+      - Vite
+  - group: Офлайн
+    items:
+      - IndexedDB
+  - group: Платформа
+    items:
+      - Capacitor 7
+      - Android
+  - group: Тесты
+    items:
+      - Vitest
 published: true
 ---
 

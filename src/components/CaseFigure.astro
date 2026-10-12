@@ -13,7 +13,11 @@ const images = figure.images ?? [];
 <figure class="case-figure">
   <div class:list={['case-figure-media', { multi: images.length > 1 }]} style={`--cols: ${Math.max(images.length, 1)}`}>
     {images.map((image) => (
-      <div class="case-figure-cell"><Image src={image.src} alt={image.alt} loading="lazy" /></div>
+      <div class="case-figure-cell">
+        {/* A link to the full-size file: opens full screen through Lightbox,
+            or as the bare image without JavaScript. */}
+        <a class="case-figure-zoom" href={image.src.src} data-zoom><Image src={image.src} alt={image.alt} loading="lazy" /></a>
+      </div>
     ))}
     {/* No autoplay: the demo is proof on demand, not motion the reader has to
         sit through. `preload="metadata"` keeps the poster frame cheap. */}
@@ -75,6 +79,8 @@ const images = figure.images ?? [];
     max-height: 760px;
     margin-inline: auto;
   }
+
+  .case-figure-zoom { display: block; max-width: 100%; cursor: zoom-in; }
 
   figcaption {
     display: flex;

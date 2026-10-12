@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import ProjectMedia from '../components/ProjectMedia.astro';
+import Lightbox from '../components/Lightbox.astro';
 import CaseBody from '../components/CaseBody.astro';
 import Icon from '../components/Icon.astro';
 import '../styles/routes/case.css';
@@ -15,6 +16,7 @@ const statusLabels = {
   building: 'In development',
 } as const;
 
+const technologies = entry.data.technologies;
 const facts = [
   { label: 'Роль', value: entry.data.role },
   { label: 'Команда', value: entry.data.team },
@@ -43,9 +45,11 @@ const facts = [
           1px box around every block, and the stack table already solved this
           the same way: a 1px gap over a line-coloured background draws the
           dividers at any column count. */}
-      {/* Technologies used to sit in a sticky box in a 300px right column that
-          held nothing else for the length of the page. They belong here: they
-          are a fact of the project, like the role and the period. */}
+      {/* Technologies are the table's second row, one cell per group, in the
+          same dt/dd grammar as the facts above. A single wrapped line of ten
+          names read as a list; grouped by job, the row says what each one was
+          for. With fewer than four groups the last cell runs to the edge, so
+          no empty cell is left hanging. */}
       <dl class="case-facts">
         {facts.map((fact) => (
           <div>
@@ -53,13 +57,15 @@ const facts = [
             <dd>{fact.value}</dd>
           </div>
         ))}
-        <div class="case-facts-tech">
-          <dt><span aria-hidden="true">//</span> Технологии</dt>
-          <dd><ul>{entry.data.technologies.map((technology) => <li>{technology}</li>)}</ul></dd>
-        </div>
+        {technologies.map((group, index) => (
+          <div class="case-facts-tech" style={index === technologies.length - 1 ? `--span: ${5 - technologies.length}` : undefined}>
+            <dt><span aria-hidden="true">//</span> {group.group}</dt>
+            <dd><ul>{group.items.map((item) => <li>{item}</li>)}</ul></dd>
+          </div>
+        ))}
       </dl>
 
-      <ProjectMedia media={media} eager={true} />
+      <ProjectMedia media={media} eager={true} zoom={true} />
       <slot name="caption" />
     </header>
 
@@ -76,4 +82,5 @@ const facts = [
       </div>
     </section>
   </main>
+  <Lightbox />
 </BaseLayout>

@@ -10,16 +10,24 @@ period: Март — сентябрь 2026
 featured: true
 homepageOrder: 1
 technologies:
-  - React 19
-  - TypeScript
-  - TanStack Query
-  - TanStack Router
-  - TanStack Table
-  - WordPress REST API
-  - PHP
-  - mPDF / FPDI
-  - WhatsApp Cloud API
-  - Instagram Graph API
+  - group: Интерфейс
+    items:
+      - React 19
+      - TypeScript
+      - TanStack Query
+      - TanStack Router
+      - TanStack Table
+  - group: Сервер
+    items:
+      - PHP
+      - WordPress REST API
+  - group: Интеграции
+    items:
+      - WhatsApp Cloud API
+      - Instagram Graph API
+  - group: Документы
+    items:
+      - mPDF / FPDI
 published: true
 ---
 
