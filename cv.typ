@@ -7,10 +7,10 @@
 // сверяй и здесь.
 
 #set document(title: "Бакытжан Избасаров — Frontend Developer", author: "Бакытжан Избасаров")
-#set page(paper: "a4", margin: (x: 16mm, y: 12mm))
-#set text(font: "Onest", size: 9.2pt, lang: "ru")
-#set par(leading: 0.55em, justify: false)
-#set list(indent: 0.4em, body-indent: 0.5em, spacing: 0.42em)
+#set page(paper: "a4", margin: (x: 18mm, y: 16mm))
+#set text(font: "Onest", size: 11pt, lang: "ru")
+#set par(leading: 0.62em, justify: false)
+#set list(indent: 0.4em, body-indent: 0.5em, spacing: 0.6em)
 #show link: set text(fill: rgb("#1f4fd1"))
 #show raw: set text(font: "JetBrains Mono", size: 1.05em)
 
@@ -18,8 +18,8 @@
 #let muted = rgb("#5b5f66")
 
 #let section(title) = {
-  v(0.7em)
-  text(size: 8.5pt, weight: "semibold", tracking: 0.08em, fill: accent, upper(title))
+  v(1.1em)
+  text(size: 9.5pt, weight: "semibold", tracking: 0.08em, fill: accent, upper(title))
   v(-0.5em)
   line(length: 100%, stroke: 0.4pt + muted.lighten(50%))
   v(0.1em)
@@ -46,9 +46,10 @@
 
 // ── Шапка ───────────────────────────────────────────────
 
-#text(size: 20pt, weight: "bold")[Бакытжан Избасаров]
+#text(size: 24pt, weight: "bold")[Бакытжан Избасаров]
 #v(-0.6em)
-#text(size: 11pt)[Frontend Developer · React, TypeScript] #h(0.4em) #text(fill: muted)[Астана · офис / гибрид / удалённо]
+#text(size: 12.5pt)[Frontend Developer · React, TypeScript]\
+#text(fill: muted)[Астана · офис / гибрид / удалённо]
 
 #let phone = sys.inputs.at("phone", default: none)
 
@@ -104,6 +105,9 @@
 - Стек: React, TypeScript, Vite, Vitest, Capacitor 7, IndexedDB, Android.
 
 // ── Проекты ─────────────────────────────────────────────
+// Разрыв руками: иначе заголовок секции или проекта остаётся внизу первой
+// страницы без текста. Поменялся объём опыта — проверь, нужен ли он.
+#pagebreak(weak: true)
 
 #section("Проекты")
 
@@ -114,8 +118,14 @@
 
 #v(0.3em)
 #entry("TapyTap", "мобильное приложение", "2025 — сейчас")
-- Трекер привычек со статистикой, календарём и журналом заметок.
-- React Native, Expo, TypeScript, Zustand, Supabase.
+- Трекер привычек: 15 экранов — привычки, календарь с тепловой картой,
+  статистика, журнал заметок, архив. Основная часть написана в июне 2025.
+- В октябре 2026 свёл два слоя данных в один стор на Zustand: ушли три ошибки
+  с потерей данных, код стал короче на 461 строку.
+- Закрыл дыру в правилах доступа Supabase (RLS), через которую пользователь мог
+  читать и менять чужие данные; проверил 14 сценариями на двух аккаунтах.
+  Схему базы перенёс в миграции в репозитории.
+- React Native, Expo SDK 57, TypeScript, Zustand, Supabase.
 
 // ── Навыки ──────────────────────────────────────────────
 
@@ -123,11 +133,14 @@
 #grid(
   columns: (auto, 1fr),
   column-gutter: 1em,
-  row-gutter: 0.55em,
+  row-gutter: 0.7em,
   text(fill: muted)[Frontend], [React, TypeScript, JavaScript, TanStack, Zustand, Angular, Astro, HTML / CSS, TailwindCSS],
   text(fill: muted)[Мобильное и desktop], [React Native + Expo, Capacitor / Android, Tauri / Rust],
   text(fill: muted)[Backend и данные], [WordPress / PHP, REST API / OpenAPI, IndexedDB, Supabase],
-  text(fill: muted)[Инструменты], [Vite, Vitest, Bun, Git, Docker, Linux],
+  text(fill: muted)[Инструменты], [Vite, Vitest, Bun, Git, Docker],
+  text(fill: muted)[Linux], [Основная рабочая среда с 2025 года: Arch, Niri и Quickshell,
+    до этого Manjaro, Hyprland, Sway, GNOME. Деплой на серверы Ubuntu
+    #box[shell-скриптами].],
   text(fill: muted)[Языки], [Русский, казахский],
 )
 
