@@ -66,7 +66,7 @@
 #section("О себе")
 Год коммерческой работы над продуктовыми интерфейсами на React и TypeScript:
 ролевые кабинеты, аналитика, отчёты, офлайн-клиент для Android. Довожу задачу
-до релиза — в том числе серверную часть на PHP, когда она нужна фиче.
+до релиза — в том числе серверную часть на PHP и деплой, когда они нужны фиче.
 Портфолио с разбором кейсов — на #link("https://bakytzhan.pages.dev")[bakytzhan.pages.dev].
 
 // ── Опыт ────────────────────────────────────────────────
@@ -74,8 +74,8 @@
 #section("Опыт")
 
 #entry(link("https://steam.kz/")[STEAM.KZ], "Frontend Developer", "Август 2025 — сентябрь 2026")
-#text(fill: muted)[Образовательная компания. Стажировка, затем оплачиваемая проектная
-работа на двух продуктах; сейчас — фриланс.]
+#text(fill: muted)[Образовательная компания (steam.kz, experimentum.kz). Стажировка, затем
+оплачиваемая проектная работа; сейчас — фриланс.]
 
 #subentry("Платформа STEAM.KZ", "Март — сентябрь 2026")
 #text(fill: muted)[Надстройка над WordPress и LearnDash, 94 школы.]
@@ -91,6 +91,11 @@
   вебхука статусов: недошедшие отчёты пишутся с причиной и уходят на повтор.
 - Реализовал челлендж для учителей с проверкой соавторства роликов через
   Instagram Graph API.
+- Написал деплой SPA на серверы Ubuntu (staging и прод) shell-скриптами через rsync;
+  на прод скрипт пускает только ветку main с тегом релиза.
+- Поднял локальную копию прода в Docker Compose (MariaDB, PHP-FPM, nginx, wp-cli).
+  Скрипт восстановления разворачивает бэкап, обезличивает персональные данные и
+  глушит отправки в WhatsApp и Telegram — а если обезвредить не удалось, падает.
 - Стек: React 19, TypeScript, TanStack Query / Router / Table, WordPress REST API, PHP.
 
 #subentry([#link("https://interactivelab.kz/")[InteractiveLAB] · владелец клиентской части], "Июль — сентябрь 2026")
@@ -102,12 +107,19 @@
 - Настроил проверку итоговой сборки на совместимость с Chrome 83 и вторую
   проверку релизного APK (подпись, `cleartext`, только `https://`).
 - Релизный APK раздаётся школам, текущая версия — 0.1.2.
+- Заложил архитектуру админ-панели (React, TypeScript, Mantine, TanStack Router и
+  Query): каркас, сессия с обменом токенов, тема, общая таблица с поиском и
+  фильтрами. Дальше разделы развивал напарник.
 - Стек: React, TypeScript, Vite, Vitest, Capacitor 7, IndexedDB, Android.
 
+#subentry("Инфраструктура и интеграции", "2025 — 2026")
+- Вёл еженедельные и ежемесячные резервные копии сайтов steam.kz и experimentum.kz
+  (WordPress), участвовал в их восстановлении после сбоев.
+- Разворачивал сервисы компании в Docker: n8n, WordPress, Supabase.
+- Собирал в n8n прототипы ботов для WhatsApp, Instagram и Telegram на API Meta.
+  Этот опыт потом лёг в рассылку отчётов и челлендж платформы STEAM.KZ.
+
 // ── Проекты ─────────────────────────────────────────────
-// Разрыв руками: иначе заголовок секции или проекта остаётся внизу первой
-// страницы без текста. Поменялся объём опыта — проверь, нужен ли он.
-#pagebreak(weak: true)
 
 #section("Проекты")
 
@@ -134,10 +146,12 @@
   columns: (auto, 1fr),
   column-gutter: 1em,
   row-gutter: 0.7em,
-  text(fill: muted)[Frontend], [React, TypeScript, JavaScript, TanStack, Zustand, Angular, Astro, HTML / CSS, TailwindCSS],
+  text(fill: muted)[Frontend], [React, TypeScript, JavaScript, TanStack, Zustand, Mantine, Angular, Astro, HTML / CSS, TailwindCSS],
   text(fill: muted)[Мобильное и desktop], [React Native + Expo, Capacitor / Android, Tauri / Rust],
   text(fill: muted)[Backend и данные], [WordPress / PHP, REST API / OpenAPI, IndexedDB, Supabase],
-  text(fill: muted)[Инструменты], [Vite, Vitest, Bun, Git, Docker],
+  text(fill: muted)[Сборка и тесты], [Vite, Vitest, Bun, Git],
+  text(fill: muted)[Инфраструктура], [Docker, Docker Compose, nginx, rsync, n8n],
+  text(fill: muted)[Интеграции], [WhatsApp Cloud API, Instagram Graph API, Telegram Bot API],
   text(fill: muted)[Linux], [Основная рабочая среда с 2025 года: Arch, Niri и Quickshell,
     до этого Manjaro, Hyprland, Sway, GNOME. Деплой на серверы Ubuntu
     #box[shell-скриптами].],
@@ -147,4 +161,5 @@
 // ── Образование ─────────────────────────────────────────
 
 #section("Образование")
-#entry("Колледж KSA (Kazakhstani Swiss American)", "Программное обеспечение", "2022 — 2025")
+#entry("Колледж KSA (Kazakhstani Swiss American)", "", "2022 — 2025")
+Квалификация — разработчик программного обеспечения. #text(fill: muted)[Специальность «Программное обеспечение (по видам)».]
