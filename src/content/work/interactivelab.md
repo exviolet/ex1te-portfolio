@@ -10,18 +10,21 @@ period: Июль — сентябрь 2026
 featured: false
 homepageOrder: 2
 technologies:
-  - group: Интерфейс
+  - group: Клиент
     items:
       - React
       - TypeScript
       - Vite
-  - group: Офлайн
+  - group: Офлайн и Android
     items:
       - IndexedDB
-  - group: Платформа
-    items:
       - Capacitor 7
       - Android
+  - group: Админ-панель
+    items:
+      - Mantine
+      - TanStack Router
+      - TanStack Query
   - group: Тесты
     items:
       - Vitest
@@ -36,7 +39,7 @@ InteractiveLAB доставляет интерактивные учебные с
 
 ## Моя роль / где проходит граница
 
-Я отвечаю за `client/`: интерфейс на React, модель офлайн-контента, обёртку на Capacitor, совместимость, сборку APK и проверку на панели. Сервер на FastAPI и база данных — зона коллеги. Первую версию админ-панели построил я, затем передал её ему.
+Я отвечаю за `client/`: интерфейс на React, модель офлайн-контента, обёртку на Capacitor, совместимость, сборку APK и проверку на панели. Сервер на FastAPI и база данных — зона коллеги. Архитектуру админ-панели на React, TypeScript, Mantine, TanStack Router и Query заложил я: каркас, сессию с обменом токенов (single-flight), тему и общую таблицу с поиском и фильтрами, а разделы дальше развивал коллега.
 
 ## Решение 1 / приложение в APK, контент в IndexedDB
 

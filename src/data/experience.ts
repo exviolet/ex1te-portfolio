@@ -5,9 +5,9 @@ export const experience = {
   stages: [
     {
       period: 'Август 2025',
-      title: 'IT / R&D internship',
+      title: 'Стажировка',
       detail:
-        'Прототипы автоматизаций, интеграции, участие в резервном копировании и проверка результатов статического анализа.',
+        'Еженедельные и ежемесячные резервные копии сайтов steam.kz и experimentum.kz на WordPress, участие в их восстановлении после сбоев. Сервисы компании в Docker: n8n, WordPress, Supabase. Прототипы ботов в n8n для WhatsApp, Instagram и Telegram на API Meta — этот опыт потом лёг в рассылку отчётов и челлендж.',
     },
     {
       period: 'Сентябрь 2025',
@@ -16,9 +16,14 @@ export const experience = {
     },
     {
       period: 'Март 2026',
-      title: 'Frontend focus',
+      title: 'Платформа STEAM.KZ',
       detail:
-        'React/TypeScript-интерфейсы, ролевые сценарии, аналитика, offline Android client и release work.',
+        'Административная и клиентская SPA на React и TypeScript, ежемесячная рассылка отчётов в WhatsApp, челлендж для учителей и деплой на серверы.',
+    },
+    {
+      period: 'Июль 2026',
+      title: 'InteractiveLAB',
+      detail: 'Офлайн-клиент для школьных Android-панелей и архитектура админ-панели.',
     },
   ],
 } as const;
