@@ -49,12 +49,12 @@
 #text(size: 24pt, weight: "bold")[Бакытжан Избасаров]
 #v(-0.6em)
 #text(size: 12.5pt)[Frontend Developer · React, TypeScript]\
-#text(fill: muted)[Астана · офис / гибрид / удалённо]
-
 #let phone = sys.inputs.at("phone", default: none)
+// Телефон — в строке города: в строке контактов он переносит её, и версия
+// с телефоном уезжает на третью страницу.
+#text(fill: muted)[Астана · офис / гибрид / удалённо#if phone != none [ · #link("tel:" + phone.replace(" ", ""))[#phone]]]
 
 #text(fill: muted)[
-  #if phone != none [#link("tel:" + phone.replace(" ", ""))[#phone] ·]
   #link("mailto:bakytzhan.izbassarov@gmail.com")[bakytzhan.izbassarov\@gmail.com] ·
   #link("https://bakytzhan.pages.dev")[bakytzhan.pages.dev] ·
   #link("https://github.com/exviolet")[github.com/exviolet] ·
