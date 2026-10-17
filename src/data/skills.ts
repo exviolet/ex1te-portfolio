@@ -4,15 +4,15 @@
    it, where it runs — so the grid reads in groups without needing headings. */
 export const stackItems = [
   { kind: 'library', name: 'React' },
+  { kind: 'library', name: 'TanStack Query + Router' },
   { kind: 'language', name: 'TypeScript' },
   { kind: 'language', name: 'JavaScript' },
   { kind: 'framework', name: 'Angular' },
   { kind: 'framework', name: 'Astro' },
-  { kind: 'markup', name: 'HTML / CSS' },
 
+  { kind: 'markup', name: 'HTML / CSS' },
   { kind: 'styling', name: 'TailwindCSS' },
-  { kind: 'build', name: 'Vite + Vitest' },
-  { kind: 'runtime', name: 'Bun' },
+  { kind: 'build & runtime', name: 'Vite + Vitest + Bun' },
   { kind: 'version', name: 'Git' },
   { kind: 'infra', name: 'Docker + Docker Compose' },
   { kind: 'env', name: 'Linux / tmux' },
