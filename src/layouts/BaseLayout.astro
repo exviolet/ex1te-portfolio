@@ -1,6 +1,7 @@
 ---
 import SeoHead from '../components/SeoHead.astro';
 import SiteHeader from '../components/SiteHeader.astro';
+import SiteIntro from '../components/SiteIntro.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import PageMotion from '../components/PageMotion.astro';
 import '../styles/tokens.css';
@@ -49,6 +50,7 @@ const { title, description, routeClass = '', ogImage } = Astro.props;
     <SeoHead title={title} description={description} image={ogImage} />
   </head>
   <body class={routeClass}>
+    <SiteIntro />
     <SiteHeader />
     <slot />
     <SiteFooter />

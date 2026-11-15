@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site';
+---
+
+<div class="site-intro" aria-hidden="true">
+  <span class="intro-mark"><span>[</span> {site.handle} <span>]</span></span>
+</div>
+
+<script is:inline>
+  try {
+    if (matchMedia('(prefers-reduced-motion: no-preference)').matches &&
+        !sessionStorage.getItem('ex1te-intro-seen')) {
+      const intro = document.currentScript.previousElementSibling;
+      sessionStorage.setItem('ex1te-intro-seen', '1');
+      const events = new AbortController();
+      const finish = () => {
+        intro.removeAttribute('data-playing');
+        events.abort();
+      };
+      intro.addEventListener('animationend', (event) => {
+        if (event.target === intro) finish();
+      }, { signal: events.signal });
+      intro.addEventListener('pointerdown', finish, { signal: events.signal });
+      document.addEventListener('focusin', finish, { signal: events.signal });
+      intro.setAttribute('data-playing', '');
+    }
+  } catch {}
+</script>
+
+<style>
+  .site-intro { display: none; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .site-intro[data-playing] {
+      display: grid;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      place-items: center;
+      overflow: hidden;
+      background: var(--color-bg);
+      animation: intro-wipe var(--dur-wipe) var(--ease-wipe) both;
+    }
+
+    .intro-mark {
+      color: var(--color-ink);
+      font: 500 clamp(2rem, 9vw, 5.5rem)/1 var(--font-utility);
+      letter-spacing: -0.04em;
+      animation: intro-mark var(--dur-base) var(--ease-signature) both;
+    }
+
+    .intro-mark span { color: var(--color-accent); }
+  }
+
+  @keyframes intro-mark {
+    from { opacity: 0; transform: translateY(0.18em); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes intro-wipe {
+    0%, 44% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 115%); }
+    99% { visibility: visible; }
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% -18%, 0 0);
+      visibility: hidden;
+    }
+  }
+</style>
