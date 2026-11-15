@@ -53,9 +53,10 @@
      curve is the one the section reveals and the project handover already
      use (GSAP power2.out), and exits run at roughly 0.6x the entrance, as the
      footer watermark already does. Personality is Premium — decelerating
-     curves, no overshoot anywhere. */
+     curves, with overshoot reserved for the magnetic actions. */
   --ease-signature: cubic-bezier(0.33, 1, 0.68, 1);
   --ease-exit: cubic-bezier(0.32, 0, 0.67, 0);
+  --ease-spring: cubic-bezier(0.22, 1.45, 0.45, 1);
   --dur-quick: 140ms;
   --dur-base: 340ms;
   --dur-slow: 550ms;

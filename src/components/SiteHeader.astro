@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import MagneticAction from './MagneticAction.astro';
 import { contact } from '../data/contact';
 // build.format 'file': the build sees `/about.html`, the visitor `/about`.
 // SeoHead strips the suffix the same way for the canonical URL.
@@ -27,7 +28,7 @@ const active = (href: string) => href === '/work' ? path.startsWith('/work') : p
         <Icon name="github" size={17} />
       </a>
       {/* Download arrow: points down into a tray, because the CV is a file to take away. */}
-      <a class="pill" href="/cv.pdf"><Icon name="download" size={15} />CV</a>
+      <MagneticAction><a class="pill" href="/cv.pdf"><Icon name="download" size={15} />CV</a></MagneticAction>
     </div>
   </div>
 </header>

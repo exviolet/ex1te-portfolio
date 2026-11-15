@@ -8,6 +8,7 @@ import SectionHead from '../components/SectionHead.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
 import StackGrid from '../components/StackGrid.astro';
 import Icon from '../components/Icon.astro';
+import MagneticAction from '../components/MagneticAction.astro';
 import { site } from '../data/site';
 import '../styles/routes/home.css';
 
@@ -29,8 +30,8 @@ const [firstName, lastName] = site.name.split(' ');
           <p class="identity-role">{site.role} <span>//</span> Казахстан</p>
           <p class="identity-description">{site.description}</p>
           <div class="identity-actions">
-            <a class="pill pill-accent" href="/contact"><Icon name="send-mail" size={15} />Связаться</a>
-            <a class="pill" href="/work">Работы<Icon name="arrow-right" size={15} /></a>
+            <MagneticAction><a class="pill pill-accent pill-sheen" href="/contact"><Icon name="send-mail" size={15} />Связаться</a></MagneticAction>
+            <MagneticAction><a class="pill" href="/work">Работы<Icon name="arrow-right" size={15} /></a></MagneticAction>
           </div>
           <dl class="identity-facts">
             <div><dt>Статус</dt><dd class="open">{site.availability}</dd></div>

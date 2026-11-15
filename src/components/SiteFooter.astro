@@ -1,5 +1,6 @@
 ---
 import Icon from './Icon.astro';
+import MagneticAction from './MagneticAction.astro';
 import { site } from '../data/site';
 import { contact } from '../data/contact';
 
@@ -34,8 +35,8 @@ const socials = [
         {/* Diagonal arrow: both actions send the visitor out of the page.
             "Написать" goes to Telegram, not /contact — the line above names
             the channel, and a button landing somewhere else would break it. */}
-        <a class="pill pill-accent" href={contact.telegram}>Написать<Icon name="arrow-up-right" size={15} /></a>
-        <a class="pill" href={contact.cv}>Резюме<Icon name="download" size={15} /></a>
+        <MagneticAction><a class="pill pill-accent pill-sheen" href={contact.telegram}>Написать<Icon name="arrow-up-right" size={15} /></a></MagneticAction>
+        <MagneticAction><a class="pill" href={contact.cv}>Резюме<Icon name="download" size={15} /></a></MagneticAction>
       </div>
       <p class="footer-rights">© {year} {site.name}</p>
     </div>

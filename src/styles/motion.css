@@ -58,3 +58,41 @@ a, button {
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
 }
+
+@media (prefers-reduced-motion: no-preference) {
+  .pill-sheen {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    --sheen-strength: 0.72;
+  }
+
+  html[data-theme="light"] .pill-sheen { --sheen-strength: 0.32; }
+
+  .pill-sheen::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--sheen-strength);
+    background: radial-gradient(ellipse 78% 205% at 0% 115%,
+      transparent 58%, #d3dce4a6 66%, #f8fbff 70%, #dbe4ec66 73%, transparent 81%);
+    transform: translateX(-72%);
+  }
+
+  .pill-sheen:focus-visible::before {
+    animation: pill-sheen var(--dur-slow) var(--ease-wipe) both;
+  }
+
+  @media (hover: hover) {
+    .pill-sheen:hover::before {
+      animation: pill-sheen var(--dur-slow) var(--ease-wipe) both;
+    }
+  }
+}
+
+@keyframes pill-sheen {
+  from { transform: translateX(-72%); }
+  to { transform: translateX(108%); }
+}
