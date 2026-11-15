@@ -58,6 +58,7 @@
   --ease-exit: cubic-bezier(0.32, 0, 0.67, 0);
   --ease-spring: cubic-bezier(0.22, 1.45, 0.45, 1);
   --dur-quick: 140ms;
+  --dur-page: 200ms;
   --dur-base: 340ms;
   --dur-slow: 550ms;
   --dur-theme: 260ms;

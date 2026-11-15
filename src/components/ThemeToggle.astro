@@ -52,6 +52,7 @@ import Icon from './Icon.astro';
   apply(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
 
   let settle: number | undefined;
+  let themeTransition: ViewTransition | undefined;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   toggle?.addEventListener('click', () => {
@@ -71,7 +72,17 @@ import Icon from './Icon.astro';
        colour transition must stay out of it — running both would animate the
        palette underneath a snapshot that is already animating. */
     if (!reduced.matches && typeof document.startViewTransition === 'function') {
-      document.startViewTransition(swap);
+      const transition = document.startViewTransition(() => {
+        root.dataset.themeWipe = '';
+        swap();
+      });
+      themeTransition = transition;
+      const finish = () => {
+        if (themeTransition !== transition) return;
+        delete root.dataset.themeWipe;
+        themeTransition = undefined;
+      };
+      void transition.finished.then(finish, finish);
       return;
     }
 

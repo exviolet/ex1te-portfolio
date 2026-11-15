@@ -38,14 +38,26 @@ a, button {
   }
 }
 
+/* Same-origin document navigation keeps the browser's native crossfade and
+   history handling. The fixed-position snapshots blend the sticky header
+   together with its backdrop so the glass stays visually attached to the page. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  html:not([data-theme-wipe])::view-transition-group(root) {
+    animation-duration: var(--dur-page);
+    animation-timing-function: var(--ease-signature);
+  }
+}
+
 /* Theme handover as a diagonal wipe, travelling from the right edge to the left.
    The outgoing snapshot is held still and the incoming theme is revealed under a
    slanted band, so the two themes never cross-fade into mud. Guarded twice: the
    API must exist, and reduced motion falls back to the colour transition above. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (view-transition-name: root) {
-    ::view-transition-old(root) { animation: none; }
-    ::view-transition-new(root) { animation: var(--dur-wipe) var(--ease-wipe) both theme-wipe; }
+    html[data-theme-wipe]::view-transition-old(root) { animation: none; }
+    html[data-theme-wipe]::view-transition-new(root) { animation: var(--dur-wipe) var(--ease-wipe) both theme-wipe; }
   }
 }
 
